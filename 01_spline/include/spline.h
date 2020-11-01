@@ -32,7 +32,5 @@ public:
 
 protected:
     void update();
-
-private:
     void tridiagonalMatrixAlgorithm(const std::vector<double>& h);
 };

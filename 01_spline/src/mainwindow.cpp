@@ -14,7 +14,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
     delete p_chart;
-
     delete ui;
 }
 

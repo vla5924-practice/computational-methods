@@ -18,4 +18,3 @@ QPointF PointDialog::resultPointF()
     result.setY(ui->doublespinbox_y->value());
     return result;
 }
-
