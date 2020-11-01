@@ -6,6 +6,8 @@
 
 #include <QPointF>
 
+constexpr size_t SPLINE_COUNT_POINTS_MIN = 3;
+
 class Spline
 {
 protected:

@@ -1,7 +1,8 @@
 #pragma once
 
-#include <QChart>
+#include <limits>
 
+#include <QChart>
 #include <QLineSeries>
 #include <QScatterSeries>
 #include <QValueAxis>

@@ -19,7 +19,7 @@ void Spline::insert(const QPointF& point)
     }
     m_points.insert(iterator, point);
     // hmm...
-    if (m_points.size() > 2)
+    if (m_points.size() >= SPLINE_COUNT_POINTS_MIN)
         update();
 }
 
