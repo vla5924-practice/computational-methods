@@ -1,7 +1,10 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
+
+#include "pointdialog.h"
+#include "spline.h"
+#include "splinechart.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -11,11 +14,17 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+private:
+    SplineChart *p_chart;
+    Spline m_spline;
+
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void showAddPointDialog();
 };
-#endif // MAINWINDOW_H
