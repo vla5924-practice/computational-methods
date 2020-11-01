@@ -23,10 +23,10 @@ public:
     void insert(const QPointF& point);
 
     const std::vector<QPointF>& points() const;
-    const std::vector<double> a();
-    const std::vector<double> b();
-    const std::vector<double> c();
-    const std::vector<double> d();
+    const std::vector<double>& a() const;
+    const std::vector<double>& b() const;
+    const std::vector<double>& c() const;
+    const std::vector<double>& d() const;
 
 protected:
     void update();

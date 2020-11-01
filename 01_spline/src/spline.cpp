@@ -28,22 +28,22 @@ const std::vector<QPointF>& Spline::points() const
     return m_points;
 }
 
-const std::vector<double> Spline::a()
+const std::vector<double>& Spline::a() const
 {
     return m_a;
 }
 
-const std::vector<double> Spline::b()
+const std::vector<double>& Spline::b() const
 {
     return m_b;
 }
 
-const std::vector<double> Spline::c()
+const std::vector<double>& Spline::c() const
 {
     return m_c;
 }
 
-const std::vector<double> Spline::d()
+const std::vector<double>& Spline::d() const
 {
     return m_d;
 }
