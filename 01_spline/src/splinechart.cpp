@@ -38,7 +38,7 @@ SplineChart::~SplineChart()
 void SplineChart::load(const Spline& spline)
 {
     p_points_series->clear();
-    for (auto i = spline.points().begin(); i!= spline.points().end(); i++)
+    for (auto i = spline.points().begin(); i != spline.points().end(); i++)
     {
         *p_points_series << *i;
 
@@ -57,6 +57,24 @@ void SplineChart::load(const Spline& spline)
         else if (i->y() > max_y)
         {
             max_y = i->y();
+        }
+    }
+
+    p_spline_series->clear();
+    if (spline.points().size() > 2)
+    {
+        for (size_t i = 0; i < spline.points().size() - 1; i++)
+        {
+            for (qreal j = spline.points()[i].x(); j < spline.points()[i + 1].x(); j += ( spline.points()[i + 1].x() - spline.points()[i].x()) / 100)
+            {
+                double a = spline.a()[i];
+                double b = spline.a()[i];
+                double c = spline.a()[i];
+                double d = spline.a()[i];
+                double x = spline.points()[i + 1].x();
+                double value = a + b * (j - x) + c * (j - x) * (j - x) + d * (j - x) * (j - x) * (j - x);
+                *p_spline_series << QPointF(j, value);
+            }
         }
     }
 
