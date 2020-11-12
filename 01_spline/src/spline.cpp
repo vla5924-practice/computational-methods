@@ -12,10 +12,13 @@ Spline::~Spline()
 
 void Spline::insert(const QPointF& point)
 {
-    auto iterator = m_points.begin();
-    while (iterator != m_points.end() && iterator->x() < point.x())
-        iterator++;
-    m_points.insert(iterator, point);
+    auto same_x_it = std::find_if(m_points.begin(), m_points.end(),
+                                  [point](const QPointF& pt){ return pt.x() == point.x(); });
+    if (same_x_it != m_points.end())
+        throw std::logic_error("Point with this x coordinate is already exists.");
+    auto ins_it = std::find_if_not(m_points.begin(), m_points.end(),
+                                   [point](const QPointF& pt){ return pt.x() < point.x(); });
+    m_points.insert(ins_it, point);
     if (m_points.size() >= SPLINE_COUNT_POINTS_MIN)
         update();
 }
