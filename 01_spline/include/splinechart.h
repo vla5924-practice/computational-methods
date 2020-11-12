@@ -9,6 +9,8 @@
 
 #include "spline.h"
 
+constexpr double SPLINECHART_STEP = 100.;
+
 class SplineChart : public QtCharts::QChart
 {
     Q_OBJECT

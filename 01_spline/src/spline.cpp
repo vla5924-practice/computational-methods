@@ -14,11 +14,8 @@ void Spline::insert(const QPointF& point)
 {
     auto iterator = m_points.begin();
     while (iterator != m_points.end() && iterator->x() < point.x())
-    {
         iterator++;
-    }
     m_points.insert(iterator, point);
-    // hmm...
     if (m_points.size() >= SPLINE_COUNT_POINTS_MIN)
         update();
 }
@@ -28,87 +25,69 @@ const std::vector<QPointF>& Spline::points() const
     return m_points;
 }
 
-const std::vector<double>& Spline::a() const
-{
-    return m_a;
-}
-
-const std::vector<double>& Spline::b() const
-{
-    return m_b;
-}
-
-const std::vector<double>& Spline::c() const
-{
-    return m_c;
-}
-
-const std::vector<double>& Spline::d() const
-{
-    return m_d;
-}
-
 void Spline::update()
 {
-    m_a = std::vector<double>(m_points.size());
-    m_b = std::vector<double>(m_points.size());
-    m_c = std::vector<double>(m_points.size());
-    m_d = std::vector<double>(m_points.size());
-    std::vector<double> h(m_points.size());
+    size_t count_points = m_points.size();
+    m_a = std::vector<double>(count_points, 0);
+    m_b = std::vector<double>(count_points, 0);
+    m_c = std::vector<double>(count_points, 0);
+    m_d = std::vector<double>(count_points, 0);
+    tridiagonalMatrixAlgorithm();
+}
 
+void Spline::tridiagonalMatrixAlgorithm()
+{
+    size_t n = m_points.size() - 1;
+    std::vector<double> h(n);
     for (size_t i = 1; i < h.size(); i++)
+        h[i] = m_points[i + 1].x() - m_points[i].x();
+
+    std::vector<double> diagMain(n - 1);
+    std::vector<double> diagUpper(n - 2);
+    std::vector<double> diagLower(n - 2);
+    std::vector<double> vec(n - 1);
+
+    for (size_t i = 0; i < n - 1; i++)
     {
-        h[i] = m_points[i].x() - m_points[i - 1].x();
+        vec[i] = 6 * (h[i] * (m_points[i + 2].y() - m_points[i + 1].y()) - h[i + 1] * (m_points[i + 1].y() - m_points[i].y())) / (h[i + 1] * h[i] * (h[i + 1] + h[i]));
+        diagMain[i] = 2;
     }
 
-    m_c[0] = m_c[m_c.size() - 1] = 0;
-    tridiagonalMatrixAlgorithm(h);
+    for (size_t i = 0; i < n - 2; i++)
+    {
+        diagUpper[i] = h[i + 2] / (h[i + 1] + h[i + 2]);
+        diagLower[i] = h[i + 1] / (h[i + 1] + h[i + 2]);
+    }
 
-    for (size_t i = 1; i < m_points.size(); i++)
+    std::vector<double> p(n - 2), q(n - 1);
+    p[0] = -diagUpper[0] / diagMain[0];
+    q[0] = vec[0] / diagMain[0];
+    for (size_t i = 1; i < n - 2; i++)
+    {
+        double denom_p = diagLower[i - 1] * p[i - 1] + diagMain[i];
+        p[i] = -diagUpper[i] / denom_p;
+        double denom_q = diagLower[i - 1] * p[i - 1] + diagMain[i];
+        q[i] = (vec[i] - diagLower[i - 1] * q[i - 1]) / denom_q;
+    }
+
+    //m_c.front() = m_c.back() = 0;
+    m_c[n - 1] = q[n - 2];
+    for (size_t i = n - 2; i > 0; i--)
+        m_c[i] = p[i - 1] * m_c[i + 1] + q[i - 1];
+
+    m_d[0] = m_c[1] / h[0];
+    m_b[0] = m_c[1] * h[0] / 3 + ((m_points[1].y() - m_points[0].y()) / h[0]);
+    for (size_t i = 1; i < n + 1; i++)
     {
         m_a[i] = m_points[i].y();
-        m_d[i] = (m_c[i] - m_c[i - 1]) / (3 * h[i]);
-        m_b[i] = (m_a[i] - m_a[i - 1]) / h[i] + ((2 * m_c[i] + m_c[i - 1]) / 3) * h[i];
+        m_b[i] = m_c[i] * h[i - 1] / 3 + m_c[i - 1] * h[i - 1] / 6 + ((m_points[i].y() - m_points[i - 1].y()) / h[i - 1]);
+        m_d[i] = m_c[i] - m_c[i - 1];
     }
 }
 
-void Spline::tridiagonalMatrixAlgorithm(const std::vector<double>& h)
+double Spline::interpolatedValue(size_t i, double x) const
 {
-    size_t count_points = m_points.size();
-    std::vector<std::array<double, 3>> matrix(count_points);
-
-    matrix[1] = { 0, 2 * h[2] + 2 * h[1], h[2] };
-    for (size_t i = 2; i < count_points - 2; i++)
-        matrix[i] = { h[i], 2 * h[i + 1] + 2 * h[i], h[i + 1] };
-    matrix[count_points - 2] = { h[count_points - 2], 2 * h[count_points - 1] + 2 * h[count_points - 2], 0 };
-
-    std::vector<double> vector(count_points - 1);
-    for (size_t i = 1; i < count_points - 1; i++)
-    {
-        double k1 = (m_points[i + 1].y() - m_points[i].y()) / h[i + 1];
-        double k2 = (m_points[i].y() - m_points[i - 1].y()) / h[i];
-        vector[i] = 3 * (k1 - k2);
-    }
-
-    size_t n = count_points - 2;
-    std::vector<double> a(count_points - 1);
-    std::vector<double> b(count_points - 1);
-    std::vector<double> pre_result(count_points - 1);
-
-    double y = matrix[1][1];
-    a[1] = -matrix[1][2] / y;
-    b[1] = vector[1] / y;
-    for (size_t i = 2; i < n; i++)
-    {
-        y = matrix[i][1] + matrix[i][0] * a[i - 1];
-        a[i] = -matrix[i][2] / y;
-        b[i] = (vector[i] - matrix[i][0] * b[i - 1]) / y;
-    }
-
-    pre_result[n] = (vector[n] - matrix[n][0] * b[n - 1]) / (matrix[n][1] + matrix[n][0] * a[n - 1]);
-    for (size_t i = n - 1; i >= 1; i--)
-        pre_result[i] = a[i] * pre_result[i + 1] + b[i];
-
-    for (size_t i = 1; i < count_points - 1; i++)
-        m_c[i] = pre_result[i];
+    double a = m_a[i], b = m_b[i], c = m_c[i], d = m_d[i];
+    double delta = x - m_points[i].x();
+    return (a + b * delta + (c / 2.) * delta * delta + (d / 6.) * delta * delta * delta);
 }

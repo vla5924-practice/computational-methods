@@ -2,11 +2,10 @@
 
 #include <stdexcept>
 #include <vector>
-#include <array>
 
 #include <QPointF>
 
-constexpr size_t SPLINE_COUNT_POINTS_MIN = 3;
+constexpr size_t SPLINE_COUNT_POINTS_MIN = 4;
 
 class Spline
 {
@@ -25,12 +24,9 @@ public:
     void insert(const QPointF& point);
 
     const std::vector<QPointF>& points() const;
-    const std::vector<double>& a() const;
-    const std::vector<double>& b() const;
-    const std::vector<double>& c() const;
-    const std::vector<double>& d() const;
+    double interpolatedValue(size_t i, double x) const;
 
 protected:
     void update();
-    void tridiagonalMatrixAlgorithm(const std::vector<double>& h);
+    void tridiagonalMatrixAlgorithm();
 };
