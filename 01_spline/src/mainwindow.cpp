@@ -30,7 +30,7 @@ void MainWindow::showAddPointDialog()
         }
         catch (std::logic_error& e)
         {
-            QMessageBox::critical(this, "Error", e.what());
+            QMessageBox::warning(this, "Error", e.what());
         }
     }
 }
