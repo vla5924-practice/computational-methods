@@ -23,7 +23,14 @@ void MainWindow::showAddPointDialog()
     dialog.exec();
     if (dialog.result() == QDialog::Accepted)
     {
-        m_spline.insert(dialog.resultPointF());
-        p_chart->load(m_spline);
+        try
+        {
+            m_spline.insert(dialog.resultPointF());
+            p_chart->load(m_spline);
+        }
+        catch (std::logic_error& e)
+        {
+            QMessageBox::critical(this, "Error", e.what());
+        }
     }
 }

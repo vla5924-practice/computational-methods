@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QMessageBox>
 
 #include "pointdialog.h"
 #include "spline.h"
