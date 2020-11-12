@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
 
     connect(ui->action_add_point, &QAction::triggered, this, &MainWindow::showAddPointDialog);
+    connect(ui->action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
 
     p_chart = new SplineChart();
     ui->chart_view->setChart(p_chart);
@@ -33,4 +34,10 @@ void MainWindow::showAddPointDialog()
             QMessageBox::warning(this, "Error", e.what());
         }
     }
+}
+
+void MainWindow::showAboutDialog()
+{
+    AboutDialog dialog;
+    dialog.exec();
 }

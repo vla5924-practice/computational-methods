@@ -4,6 +4,7 @@
 #include <QMessageBox>
 
 #include "pointdialog.h"
+#include "aboutdialog.h"
 #include "spline.h"
 #include "splinechart.h"
 
@@ -28,4 +29,5 @@ private:
 
 private slots:
     void showAddPointDialog();
+    void showAboutDialog();
 };
