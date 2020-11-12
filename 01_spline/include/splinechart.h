@@ -22,10 +22,10 @@ protected:
     QtCharts::QValueAxis *p_axis_x;
     QtCharts::QValueAxis *p_axis_y;
 
-    qreal min_x;
-    qreal max_x;
-    qreal min_y;
-    qreal max_y;
+    qreal m_min_x;
+    qreal m_max_x;
+    qreal m_min_y;
+    qreal m_max_y;
 
 public:
     explicit SplineChart(QGraphicsItem *parent = nullptr);

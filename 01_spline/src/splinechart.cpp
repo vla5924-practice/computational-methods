@@ -24,8 +24,8 @@ SplineChart::SplineChart(QGraphicsItem  *parent) : QtCharts::QChart(parent)
     p_points_series->attachAxis(p_axis_x);
     p_points_series->attachAxis(p_axis_y);
 
-    min_x = min_y = std::numeric_limits<double>::max();
-    max_x = max_y = -std::numeric_limits<double>::max();
+    m_min_x = m_min_y = std::numeric_limits<double>::max();
+    m_max_x = m_max_y = -std::numeric_limits<double>::max();
 }
 
 SplineChart::~SplineChart()
@@ -39,35 +39,23 @@ SplineChart::~SplineChart()
 void SplineChart::load(const Spline& spline)
 {
     p_points_series->clear();
-    for (auto i = spline.points().begin(); i != spline.points().end(); i++)
+    for (const auto& point : spline.points())
     {
-        *p_points_series << *i;
-
-        if (i->x() < min_x)
-        {
-            min_x = i->x();
-        }
-        else if (i->x() > max_x)
-        {
-            max_x = i->x();
-        }
-        if (i->y() < min_y)
-        {
-            min_y = i->y();
-        }
-        else if (i->y() > max_y)
-        {
-            max_y = i->y();
-        }
+        *p_points_series << point;
+        if (point.x() < m_min_x)
+            m_min_x = point.x();
+        else if (point.x() > m_max_x)
+            m_max_x = point.x();
+        if (point.y() < m_min_y)
+            m_min_y = point.y();
+        else if (point.y() > m_max_y)
+            m_max_y = point.y();
     }
-
     p_spline_series->clear();
     if (spline.points().size() >= SPLINE_COUNT_POINTS_MIN)
         for (size_t i = 1; i < spline.points().size(); i++)
             for (qreal j = spline.points()[i - 1].x(); j < spline.points()[i].x(); j += (spline.points()[i].x() - spline.points()[i - 1].x()) / SPLINECHART_STEP)
                 *p_spline_series << QPointF(j, spline.interpolatedValue(i, j));
-
-    p_axis_x->setRange(min_x, max_x);
-    p_axis_y->setRange(min_y, max_y);
-
+    p_axis_x->setRange(m_min_x, m_max_x);
+    p_axis_y->setRange(m_min_y, m_max_y);
 }
