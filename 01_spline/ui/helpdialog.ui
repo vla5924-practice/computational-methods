@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HelpDialog</class>
+ <widget class="QDialog" name="HelpDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>239</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Help</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>381</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;This application will help you to draw a cubic spline for the function.&lt;br/&gt;&lt;br/&gt;To render a cubic spline of interpolated function, add at least 4 points.&lt;br/&gt;Curve of the function is updated automatically as soon as you add new points.&lt;br/&gt;To see coordinates of each point, move the mouse cursor over it.&lt;br/&gt;To remove all points and start over, click &amp;quot;Clear canvas&amp;quot;.&lt;br/&gt;&lt;br/&gt;Adding a point:&lt;br/&gt;1. Click &amp;quot;Add a point&amp;quot;.&lt;br/&gt;2. Enter x and y coordinates.&lt;br/&gt;3. Click &amp;quot;OK&amp;quot;.&lt;br/&gt;If a point cannot be added, you will see an error message with explanation.&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::RichText</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
