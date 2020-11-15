@@ -18,7 +18,8 @@ SOURCES += \
     src/spline.cpp \
     src/splinechart.cpp \
     src/aboutdialog.cpp \
-    src/loadingdialog.cpp
+    src/loadingdialog.cpp \
+    src/helpdialog.cpp
 
 HEADERS += \
     include/mainwindow.h \
@@ -26,10 +27,12 @@ HEADERS += \
     include/spline.h \
     include/splinechart.h \
     include/aboutdialog.h \
-    include/loadingdialog.h
+    include/loadingdialog.h \
+    include/helpdialog.h
 
 FORMS += \
     ui/aboutdialog.ui \
+    ui/helpdialog.ui \
     ui/loadingdialog.ui \
     ui/mainwindow.ui \
     ui/pointdialog.ui
