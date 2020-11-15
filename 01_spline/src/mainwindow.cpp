@@ -27,6 +27,8 @@ void MainWindow::showAddPointDialog()
         try
         {
             m_spline.insert(dialog.resultPointF());
+            LoadingDialog l_dialog(p_chart);
+            l_dialog.open();
             p_chart->load(m_spline);
         }
         catch (std::logic_error& e)

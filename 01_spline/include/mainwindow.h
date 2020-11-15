@@ -5,6 +5,7 @@
 
 #include "pointdialog.h"
 #include "aboutdialog.h"
+#include "loadingdialog.h"
 #include "spline.h"
 #include "splinechart.h"
 
