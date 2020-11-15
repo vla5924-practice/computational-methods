@@ -45,6 +45,7 @@ SplineChart::SplineChart(QGraphicsItem  *parent) : QtCharts::QChart(parent)
     m_max_x = m_max_y = -std::numeric_limits<double>::max();
 
     connect(p_points_series, &QtCharts::QScatterSeries::hovered, this, &SplineChart::showPointLabels);
+    connect(p_spline_series, &QtCharts::QLineSeries::hovered, this, &SplineChart::emitSplineHovered);
 }
 
 SplineChart::~SplineChart()
@@ -105,6 +106,11 @@ void SplineChart::clear()
 void SplineChart::showPointLabels(const QPointF&, bool hovered)
 {
     p_points_series->setPointLabelsVisible(hovered);
+}
+
+void SplineChart::emitSplineHovered(const QPointF &point)
+{
+    emit splineHovered(point);
 }
 
 void SplineChart::resetRanges()

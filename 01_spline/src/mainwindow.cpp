@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->action_clear_canvas, &QAction::triggered, this, &MainWindow::clearCanvas);
     connect(ui->action_help, &QAction::triggered, this, &MainWindow::showHelpDialog);
     connect(ui->action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
+    connect(p_chart, &SplineChart::splineHovered, this, &MainWindow::statusCoordinates);
 }
 
 MainWindow::~MainWindow()
@@ -54,4 +55,10 @@ void MainWindow::clearCanvas()
 {
     p_chart->clear();
     m_spline.removeAll();
+}
+
+void MainWindow::statusCoordinates(const QPointF &point)
+{
+    QString coords = QString("Coordinates: %1, %2").arg(point.x(), 0, 'f').arg(point.y(), 0, 'f');
+    ui->statusbar->showMessage(coords, 10000);
 }

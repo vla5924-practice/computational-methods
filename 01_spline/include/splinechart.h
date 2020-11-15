@@ -37,8 +37,10 @@ public:
 
 public slots:
     void showPointLabels(const QPointF&, bool hovered);
+    void emitSplineHovered(const QPointF& point);
     void clear();
 
 signals:
     void proceed(int current, int total, const QString& message);
+    void splineHovered(const QPointF& point);
 };

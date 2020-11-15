@@ -34,4 +34,5 @@ private slots:
     void showAboutDialog();
     void showHelpDialog();
     void clearCanvas();
+    void statusCoordinates(const QPointF& point);
 };
