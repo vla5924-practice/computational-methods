@@ -62,7 +62,7 @@
   </widget>
   <action name="action_add_point">
    <property name="text">
-    <string>Add point</string>
+    <string>Add a point</string>
    </property>
   </action>
   <action name="action_about">
