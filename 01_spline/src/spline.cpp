@@ -1,14 +1,6 @@
 #include "spline.h"
 
-Spline::Spline()
-{
-
-}
-
-Spline::~Spline()
-{
-
-}
+constexpr size_t SPLINE_COUNT_POINTS_MIN = 4;
 
 void Spline::insert(const QPointF& point)
 {
@@ -89,4 +81,9 @@ double Spline::interpolatedValue(size_t i, double x) const
     double a = m_a[i], b = m_b[i], c = m_c[i], d = m_d[i];
     double delta = x - m_points[i].x();
     return (a + b * delta + (c / 2.) * delta * delta + (d / 6.) * delta * delta * delta);
+}
+
+bool Spline::available() const
+{
+    return m_points.size() >= SPLINE_COUNT_POINTS_MIN;
 }

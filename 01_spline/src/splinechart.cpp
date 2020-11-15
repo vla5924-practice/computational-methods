@@ -71,7 +71,7 @@ void SplineChart::load(const Spline& spline)
     }
     emit proceed(2, 3, "Rendering curve");
     p_spline_series->clear();
-    if (spline.points().size() >= SPLINE_COUNT_POINTS_MIN)
+    if (spline.available())
         for (size_t i = 1; i < spline.points().size(); i++)
         {
             const auto& pt = spline.points()[i];
