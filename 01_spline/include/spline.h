@@ -21,6 +21,7 @@ public:
     ~Spline() = default;
 
     void insert(const QPointF& point);
+    void removeAll();
 
     const std::vector<QPointF>& points() const;
     double interpolatedValue(size_t i, double x) const;

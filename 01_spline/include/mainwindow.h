@@ -6,6 +6,7 @@
 #include "pointdialog.h"
 #include "aboutdialog.h"
 #include "loadingdialog.h"
+#include "helpdialog.h"
 #include "spline.h"
 #include "splinechart.h"
 
@@ -31,4 +32,6 @@ private:
 private slots:
     void showAddPointDialog();
     void showAboutDialog();
+    void showHelpDialog();
+    void clearCanvas();
 };

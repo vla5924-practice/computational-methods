@@ -37,6 +37,7 @@ public:
 
 public slots:
     void showPointLabels(const QPointF&, bool hovered);
+    void clear();
 
 signals:
     void proceed(int current, int total, const QString& message);

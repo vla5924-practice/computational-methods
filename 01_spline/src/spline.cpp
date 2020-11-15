@@ -15,6 +15,11 @@ void Spline::insert(const QPointF& point)
         update();
 }
 
+void Spline::removeAll()
+{
+    m_points.clear();
+}
+
 const std::vector<QPointF>& Spline::points() const
 {
     return m_points;

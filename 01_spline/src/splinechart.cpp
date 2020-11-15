@@ -55,8 +55,8 @@ SplineChart::~SplineChart()
 
 void SplineChart::load(const Spline& spline)
 {
+    clear();
     emit proceed(1, 3, "Drawing points");
-    p_points_series->clear();
     for (const auto& point : spline.points())
     {
         p_points_series->append(point);
@@ -70,7 +70,6 @@ void SplineChart::load(const Spline& spline)
             m_max_y = point.y();
     }
     emit proceed(2, 3, "Rendering curve");
-    p_spline_series->clear();
     if (spline.available())
         for (size_t i = 1; i < spline.points().size(); i++)
         {
@@ -91,6 +90,14 @@ void SplineChart::load(const Spline& spline)
     emit proceed(4, 3, "Finished");
 }
 
+void SplineChart::clear()
+{
+    p_points_series->clear();
+    p_spline_series->clear();
+    p_axis_h_series->clear();
+    p_axis_v_series->clear();
+}
+
 void SplineChart::showPointLabels(const QPointF&, bool hovered)
 {
     p_points_series->setPointLabelsVisible(hovered);
@@ -102,10 +109,8 @@ void SplineChart::resetRanges()
     qreal y_delta = (m_max_y - m_min_y) * 0.1;
     p_axis_x->setRange(m_min_x - x_delta, m_max_x + x_delta);
     p_axis_y->setRange(m_min_y - y_delta, m_max_y + y_delta);
-    p_axis_h_series->clear();
     p_axis_h_series->append(m_min_x - x_delta, 0);
     p_axis_h_series->append(m_max_x + x_delta, 0);
-    p_axis_v_series->clear();
     p_axis_v_series->append(0, m_min_y - y_delta);
     p_axis_v_series->append(0, m_max_y + y_delta);
 }
