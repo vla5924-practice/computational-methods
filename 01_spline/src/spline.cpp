@@ -80,7 +80,7 @@ void Spline::tridiagonalMatrixAlgorithm()
     {
         m_a[i] = m_points[i].y();
         m_b[i] = m_c[i] * h[i - 1] / 3 + m_c[i - 1] * h[i - 1] / 6 + ((m_points[i].y() - m_points[i - 1].y()) / h[i - 1]);
-        m_d[i] = m_c[i] - m_c[i - 1];
+        m_d[i] = (m_c[i] - m_c[i - 1]) / h[i - 1];
     }
 }
 
