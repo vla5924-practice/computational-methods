@@ -23,9 +23,13 @@ SplineChart::SplineChart(QGraphicsItem  *parent) : QtCharts::QChart(parent)
 
     p_axis_x = new QtCharts::QValueAxis();
     p_axis_x->setTitleText("x");
+    p_axis_x->setTickCount(8);
+    p_axis_x->setMinorTickCount(1);
     this->addAxis(p_axis_x, Qt::AlignBottom);
     p_axis_y = new QtCharts::QValueAxis();
     p_axis_y->setTitleText("y");
+    p_axis_y->setTickCount(8);
+    p_axis_y->setMinorTickCount(1);
     this->addAxis(p_axis_y, Qt::AlignLeft);
 
     p_spline_series->attachAxis(p_axis_x);
