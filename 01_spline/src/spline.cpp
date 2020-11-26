@@ -1,7 +1,5 @@
 #include "spline.h"
 
-constexpr size_t SPLINE_COUNT_POINTS_MIN = 4;
-
 void Spline::insert(const QPointF& point)
 {
     auto same_x_it = std::find_if(m_points.begin(), m_points.end(),
@@ -11,7 +9,7 @@ void Spline::insert(const QPointF& point)
     auto ins_it = std::find_if_not(m_points.begin(), m_points.end(),
                                    [point](const QPointF& pt){ return pt.x() < point.x(); });
     m_points.insert(ins_it, point);
-    if (m_points.size() >= SPLINE_COUNT_POINTS_MIN)
+    if (available())
         update();
 }
 
@@ -91,5 +89,5 @@ double Spline::interpolatedValue(size_t i, double x) const
 
 bool Spline::available() const
 {
-    return m_points.size() >= SPLINE_COUNT_POINTS_MIN;
+    return m_points.size() >= 4;
 }
