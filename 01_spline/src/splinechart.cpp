@@ -1,6 +1,7 @@
 #include "splinechart.h"
 
-constexpr double SPLINECHART_STEP = 0.01;
+constexpr double SPLINECHART_STEPS = 100;
+constexpr double SPLINECHART_GAPFACTOR = 0.2;
 
 SplineChart::SplineChart(QGraphicsItem  *parent) : QtCharts::QChart(parent)
 {
@@ -76,11 +77,17 @@ void SplineChart::load(const Spline& spline)
     }
     emit proceed(2, 3, "Rendering curve");
     if (spline.available())
+    {
+        qreal step = (m_max_x - m_min_x) / SPLINECHART_STEPS;
+        double delta = (m_max_x - m_min_x) * 3;
+        qreal front_x = spline.points().front().x();
+        for (double x = front_x - delta; x < front_x; x += step)
+            p_spline_series->append(x, spline.interpolatedValue(1, x));
         for (size_t i = 1; i < spline.points().size(); i++)
         {
             const auto& pt = spline.points()[i];
             const auto& pt_prev = spline.points()[i - 1];
-            for (qreal x = pt_prev.x(); x < pt.x(); x += SPLINECHART_STEP)
+            for (qreal x = pt_prev.x(); x < pt.x(); x += step)
             {
                 double y = spline.interpolatedValue(i, x);
                 p_spline_series->append(x, y);
@@ -90,6 +97,10 @@ void SplineChart::load(const Spline& spline)
                     m_max_y = y;
             }
         }
+        qreal back_x = spline.points().back().x();
+        for (double x = back_x; x < back_x + delta; x += step)
+            p_spline_series->append(x, spline.interpolatedValue(spline.points().size() - 1, x));
+    }
     emit proceed(3, 3, "Drawing axes");
     resetRanges();
     emit proceed(4, 3, "Finished");
@@ -115,8 +126,8 @@ void SplineChart::emitSplineHovered(const QPointF &point)
 
 void SplineChart::resetRanges()
 {
-    qreal x_delta = (m_max_x - m_min_x) * 0.1;
-    qreal y_delta = (m_max_y - m_min_y) * 0.1;
+    qreal x_delta = (m_max_x - m_min_x) * SPLINECHART_GAPFACTOR;
+    qreal y_delta = (m_max_y - m_min_y) * SPLINECHART_GAPFACTOR;
     p_axis_x->setRange(m_min_x - x_delta, m_max_x + x_delta);
     p_axis_y->setRange(m_min_y - y_delta, m_max_y + y_delta);
     p_axis_h_series->append(m_min_x - x_delta, 0);
