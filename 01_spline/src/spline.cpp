@@ -35,41 +35,51 @@ void Spline::update()
 
 void Spline::tridiagonalMatrixAlgorithm()
 {
+    if (!available())
+        return;
     size_t n = m_points.size() - 1;
     std::vector<double> h(n);
     for (size_t i = 0; i < n; i++)
         h[i] = m_points[i + 1].x() - m_points[i].x();
     std::vector<double> diagMain(n - 1);
-    std::vector<double> diagUpper(n - 2);
-    std::vector<double> diagLower(n - 2);
     std::vector<double> vec(n - 1);
     for (size_t i = 0; i < n - 1; i++)
     {
         vec[i] = 6 * (h[i] * (m_points[i + 2].y() - m_points[i + 1].y()) - h[i + 1] * (m_points[i + 1].y() - m_points[i].y())) / (h[i + 1] * h[i] * (h[i + 1] + h[i]));
         diagMain[i] = 2;
     }
-    for (size_t i = 0; i < n - 2; i++)
+    if (n > 2)
     {
-        diagUpper[i] = h[i + 2] / (h[i + 1] + h[i + 2]);
-        diagLower[i] = h[i + 1] / (h[i + 1] + h[i + 2]);
+        std::vector<double> diagUpper(n - 2);
+        std::vector<double> diagLower(n - 2);
+        for (size_t i = 0; i < n - 2; i++)
+        {
+            diagUpper[i] = h[i + 2] / (h[i + 1] + h[i + 2]);
+            diagLower[i] = h[i + 1] / (h[i + 1] + h[i + 2]);
+        }
+        std::vector<double> p(n - 2), q(n - 1);
+        p[0] = -diagUpper[0] / diagMain[0];
+        for (size_t i = 1; i < n - 2; i++)
+        {
+            double denom_p = diagLower[i - 1] * p[i - 1] + diagMain[i];
+            p[i] = -diagUpper[i] / denom_p;
+        }
+        q[0] = vec[0] / diagMain[0];
+        for (size_t i = 1; i < n - 1; i++)
+        {
+            double denom_q = diagLower[i - 1] * p[i - 1] + diagMain[i];
+            q[i] = (vec[i] - diagLower[i - 1] * q[i - 1]) / denom_q;
+        }
+        m_c[0] = m_c[n] = 0;
+        m_c[n - 1] = q[n - 2];
+        for (size_t i = n - 2; i > 0; i--)
+            m_c[i] = p[i - 1] * m_c[i + 1] + q[i - 1];
     }
-    std::vector<double> p(n - 2), q(n - 1);
-    p[0] = -diagUpper[0] / diagMain[0];
-    for (size_t i = 1; i < n - 2; i++)
+    else if (n == 2)
     {
-        double denom_p = diagLower[i - 1] * p[i - 1] + diagMain[i];
-        p[i] = -diagUpper[i] / denom_p;
-    }
-    q[0] = vec[0] / diagMain[0];
-    for (size_t i = 1; i < n - 1; i++)
-    {
-        double denom_q = diagLower[i - 1] * p[i - 1] + diagMain[i];
-        q[i] = (vec[i] - diagLower[i - 1] * q[i - 1]) / denom_q;
+        m_c[1] = vec[0] / diagMain[0];
     }
     m_c[0] = m_c[n] = 0;
-    m_c[n - 1] = q[n - 2];
-    for (size_t i = n - 2; i > 0; i--)
-        m_c[i] = p[i - 1] * m_c[i + 1] + q[i - 1];
     m_d[0] = m_c[1] / h[0];
     m_b[0] = m_c[1] * h[0] / 3 + ((m_points[1].y() - m_points[0].y()) / h[0]);
     for (size_t i = 1; i < n + 1; i++)
@@ -89,5 +99,5 @@ double Spline::interpolatedValue(size_t i, double x) const
 
 bool Spline::available() const
 {
-    return m_points.size() >= 4;
+    return m_points.size() >= 2;
 }
