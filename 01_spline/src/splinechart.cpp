@@ -10,7 +10,7 @@ SplineChart::SplineChart(QGraphicsItem  *parent) : QtCharts::QChart(parent)
     p_spline_series = new QtCharts::QLineSeries();
     p_spline_series->setColor(QColorConstants::Blue);
     p_points_series = new QtCharts::QScatterSeries();
-    p_points_series->setColor(QColorConstants::Blue);
+    p_points_series->setColor(QColorConstants::DarkBlue);
     p_axis_h_series = new QtCharts::QLineSeries();
     p_axis_h_series->setPen(QColor(0, 0, 0));
     p_axis_h_series->setOpacity(0.3);
