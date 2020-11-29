@@ -12,13 +12,19 @@ INCLUDEPATH += \
     include
 
 SOURCES += \
+    src/gaussmethodsolver.cpp \
     src/mainwindow.cpp \
     src/main.cpp \
-    src/systemtablemodel.cpp
+    src/systemtablemodel.cpp \
+    src/solutiontablemodel.cpp
 
 HEADERS += \
+    include/gaussmethodsolver.h \
+    include/lesystemsolver.h \
     include/mainwindow.h \
-    include/systemtablemodel.h
+    include/matrix.h \
+    include/systemtablemodel.h \
+    include/solutiontablemodel.h
 
 FORMS += \
     ui/mainwindow.ui
