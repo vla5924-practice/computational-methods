@@ -6,8 +6,7 @@
 #include <QAbstractTableModel>
 #include <QMessageBox>
 
-using Matrix = std::vector<std::vector<double>>;
-using Column = std::vector<double>;
+#include "matrix.h"
 
 class SystemTableModel : public QAbstractTableModel
 {
@@ -20,6 +19,9 @@ class SystemTableModel : public QAbstractTableModel
 public:
     explicit SystemTableModel(int eq_count = 1, QObject *parent = nullptr);
     ~SystemTableModel() = default;
+
+    const Matrix &matrix() const;
+    const Column &column() const;
 
 protected:
     int rowCount(const QModelIndex &parent) const override;

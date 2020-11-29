@@ -11,6 +11,16 @@ SystemTableModel::SystemTableModel(int eq_count, QObject *parent)
     }
 }
 
+const Matrix &SystemTableModel::matrix() const
+{
+    return m_matrix;
+}
+
+const Column &SystemTableModel::column() const
+{
+    return m_column;
+}
+
 int SystemTableModel::rowCount(const QModelIndex &) const
 {
     return m_eq_count;
@@ -27,9 +37,7 @@ QVariant SystemTableModel::data(const QModelIndex &index, int role) const
         return QVariant();
     int row = index.row();
     int column = index.column();
-    if (column >= m_eq_count)
-        return QVariant(m_column[row]);
-    return QVariant(m_matrix[row][column]);
+    return column >= m_eq_count ? m_column[row] : m_matrix[row][column];
 }
 
 bool SystemTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -47,7 +55,7 @@ bool SystemTableModel::setData(const QModelIndex &index, const QVariant &value, 
         emit dataChanged(index, index);
         return true;
     }
-    QMessageBox::warning(nullptr, "Error", value.toString() + " is not a correct number.");
+    QMessageBox::warning(nullptr, "Error", "\"" + value.toString() + "\" is not a correct number.");
     return false;
 }
 
@@ -66,5 +74,5 @@ QVariant SystemTableModel::headerData(int column, Qt::Orientation orientation, i
         return column + 1;
     if (column >= m_eq_count)
         return "b";
-    return "x" + QString::fromStdString(std::to_string(column));
+    return "x" + QString::fromStdString(std::to_string(column + 1));
 }
