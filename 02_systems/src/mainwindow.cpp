@@ -15,6 +15,10 @@ MainWindow::MainWindow(QWidget *parent) :
     hideWorkspace();
     connect(ui->action_start, &QAction::triggered, this, &MainWindow::startOver);
     m_system = nullptr;
+    ui->table_system->horizontalHeader()->setStretchLastSection(false);
+    ui->table_system->verticalHeader()->setVisible(true);
+    ui->table_system->setSelectionBehavior(QAbstractItemView::SelectItems);
+    ui->table_system->setSelectionMode(QAbstractItemView::SingleSelection);
 }
 
 MainWindow::~MainWindow()
@@ -35,11 +39,9 @@ void MainWindow::startOver()
     m_eq_count = eq_count;
     showWorkspace();
     if (m_system != nullptr)
-    {
         delete m_system;
-        m_system = new SystemTableModel(m_eq_count, ui->table_system);
-        ui->table_system->setModel(m_system);
-    }
+    m_system = new SystemTableModel(m_eq_count, ui->table_system);
+    ui->table_system->setModel(m_system);
 }
 
 void MainWindow::showWorkspace()

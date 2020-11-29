@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <QAbstractTableModel>
+#include <QMessageBox>
 
 using Matrix = std::vector<std::vector<double>>;
 using Column = std::vector<double>;

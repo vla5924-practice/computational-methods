@@ -39,9 +39,16 @@ bool SystemTableModel::setData(const QModelIndex &index, const QVariant &value, 
     int row = index.row();
     int column = index.column();
     double &cell = column >= m_eq_count ? m_column[row] : m_matrix[row][column];
-    cell = value.toDouble();
-    emit dataChanged(index, index);
-    return true;
+    bool ok = false;
+    double newValue = value.toDouble(&ok);
+    if (ok)
+    {
+        cell = newValue;
+        emit dataChanged(index, index);
+        return true;
+    }
+    QMessageBox::warning(nullptr, "Error", value.toString() + " is not a correct number.");
+    return false;
 }
 
 Qt::ItemFlags SystemTableModel::flags(const QModelIndex &index) const
@@ -54,14 +61,10 @@ Qt::ItemFlags SystemTableModel::flags(const QModelIndex &index) const
 QVariant SystemTableModel::headerData(int column, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
-    {
         return QVariant();
-    }
-
     if (orientation == Qt::Vertical)
-    {
-        return column;
-    }
-
-    return "x" + QString(column);
+        return column + 1;
+    if (column >= m_eq_count)
+        return "b";
+    return "x" + QString::fromStdString(std::to_string(column));
 }
