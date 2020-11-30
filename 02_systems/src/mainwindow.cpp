@@ -26,9 +26,9 @@ MainWindow::MainWindow(QWidget *parent) :
     m_solvers[GaussMethod] = new GaussMethodSolver;
     m_solvers[KramerMethod] = new KramerMethodSolver;
     m_solvers[SeidelMethod] = new SeidelMethodSolver;
+    m_solvers[JacobiMethod] = new JacobiMethodSolver;
     m_solvers[SimpleIterationMethod] = new SimpleIterationMethodSolver;
     m_solvers[UpperRelaxationMethod] = new UpperRelaxationMethodSolver;
-    m_solvers[JacobiMethod] = new JacobiMethodSolver;
 
     ui->progress->hide();
     ui->label_solution->hide();
@@ -132,7 +132,7 @@ void MainWindow::solveWithAllMethods()
     const Column &b = m_system->column();
     const Column &x = dialog.resultColumn();
     std::vector<Solution> solutions;
-    for (int method = 0; method < 6; method++)
+    for (int method = 0; method < METHODS_COUNT; method++)
     {
         Column result = m_solvers[method]->solve(A, b, x, EPSILON);
         solutions.push_back({ method, result, 0 });

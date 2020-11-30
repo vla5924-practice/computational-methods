@@ -50,7 +50,7 @@ private:
     int m_eq_count;
     SystemTableModel *m_system;
     SolutionTableModel *m_solution;
-    std::array<LESystemSolver*, 6> m_solvers;
+    std::array<LESystemSolver*, METHODS_COUNT> m_solvers;
 };
 
 #endif // MAINWINDOW_H
