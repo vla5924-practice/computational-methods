@@ -3,6 +3,7 @@
 
 #include <list>
 #include <array>
+#include <chrono>
 
 #include <QMainWindow>
 #include <QInputDialog>

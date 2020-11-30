@@ -99,6 +99,14 @@ void MainWindow::disableWorkspace()
 
 void MainWindow::solveWithChosenMethod()
 {
+    const Matrix &A = m_system->matrix();
+    if (LESystemSolver::determinant(A) == 0)
+    {
+        QMessageBox::warning(this, "Error", "Matrix determinant equals to zero.");
+        return;
+    }
+
+    using Clock = std::chrono::high_resolution_clock;
     DataRequestDialog dialog(m_eq_count);
     dialog.exec();
     if (dialog.result() != QDialog::Accepted)
@@ -106,13 +114,15 @@ void MainWindow::solveWithChosenMethod()
     disableWorkspace();
     ui->progress->show();
     int method = ui->combobox_method->currentIndex();
-    const Matrix &A = m_system->matrix();
     const Column &b = m_system->column();
     const Column &x = dialog.resultColumn();
+    Clock::time_point t1 = Clock::now();
     Column result = m_solvers[method]->solve(A, b, x, EPSILON);
+    Clock::time_point t2 = Clock::now();
+    std::chrono::duration<double> duration = t2 - t1;
     if (m_solution != nullptr)
         delete m_solution;
-    m_solution = new SolutionTableModel({{ method, result, 0 }});
+    m_solution = new SolutionTableModel({{ method, result, duration.count() }});
     ui->table_solution->setModel(m_solution);
     ui->label_solution->show();
     ui->table_solution->show();
@@ -123,20 +133,30 @@ void MainWindow::solveWithChosenMethod()
 
 void MainWindow::solveWithAllMethods()
 {
+    const Matrix &A = m_system->matrix();
+    if (LESystemSolver::determinant(A) == 0)
+    {
+        QMessageBox::warning(this, "Error", "Matrix determinant equals to zero.");
+        return;
+    }
+
+    using Clock = std::chrono::high_resolution_clock;
     DataRequestDialog dialog(m_eq_count);
     dialog.exec();
     if (dialog.result() != QDialog::Accepted)
         return;
     disableWorkspace();
     ui->progress->show();
-    const Matrix &A = m_system->matrix();
     const Column &b = m_system->column();
     const Column &x = dialog.resultColumn();
     std::vector<Solution> solutions;
     for (int method = 0; method < METHODS_COUNT; method++)
     {
+        Clock::time_point t1 = Clock::now();
         Column result = m_solvers[method]->solve(A, b, x, EPSILON);
-        solutions.push_back({ method, result, 0 });
+        Clock::time_point t2 = Clock::now();
+        std::chrono::duration<double> duration = t2 - t1;
+        solutions.push_back({ method, result, duration.count() });
     }
     if (m_solution != nullptr)
         delete m_solution;
