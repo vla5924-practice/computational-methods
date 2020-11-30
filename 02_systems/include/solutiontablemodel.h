@@ -7,17 +7,17 @@
 #include <QMessageBox>
 
 #include "matrix.h"
+#include "solution.h"
 
 class SolutionTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 
     int m_eq_count;
-    std::vector<Column> m_solutions;
-    std::vector<double> m_durations;
+    std::vector<Solution> m_solutions;
 
 public:
-    explicit SolutionTableModel(const std::vector<Column>& solutions, const std::vector<double>& durations, QObject *parent = nullptr);
+    explicit SolutionTableModel(const std::vector<Solution>& solutions, QObject *parent = nullptr);
     ~SolutionTableModel() = default;
 
 protected:
