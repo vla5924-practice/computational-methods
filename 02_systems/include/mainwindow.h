@@ -42,6 +42,7 @@ public slots:
     void disableWorkspace();
     void solveWithChosenMethod();
     void solveWithAllMethods();
+    void toggleSolution();
 
 private:
     Ui::MainWindow *ui;

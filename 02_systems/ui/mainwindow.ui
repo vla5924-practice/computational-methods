@@ -75,12 +75,12 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkbox_time_measurement">
+        <widget class="QPushButton" name="pushbutton_toggle">
          <property name="text">
-          <string>Enable time measurement</string>
+          <string>Hide last solution</string>
          </property>
-         <property name="checked">
-          <bool>true</bool>
+         <property name="flat">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -113,7 +113,7 @@
          <item>
           <widget class="QLabel" name="label_system">
            <property name="text">
-            <string>Linear equations system Ax=b: enter values from matrix A and vector b below                </string>
+            <string>Linear equations system Ax=b: enter values from matrix A and vector b below</string>
            </property>
           </widget>
          </item>

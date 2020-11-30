@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_workspace.push_back(ui->combobox_method);
     m_workspace.push_back(ui->pushbutton_solve);
     m_workspace.push_back(ui->pushbutton_solve_all);
-    m_workspace.push_back(ui->checkbox_time_measurement);
+    m_workspace.push_back(ui->pushbutton_toggle);
 
     m_system = nullptr;
     m_solution = nullptr;
@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->action_start, &QAction::triggered, this, &MainWindow::startOver);
     connect(ui->pushbutton_solve, &QPushButton::clicked, this, &MainWindow::solveWithChosenMethod);
     connect(ui->pushbutton_solve_all, &QPushButton::clicked, this, &MainWindow::solveWithAllMethods);
+    connect(ui->pushbutton_toggle, &QPushButton::clicked, this, &MainWindow::toggleSolution);
 }
 
 MainWindow::~MainWindow()
@@ -68,6 +69,7 @@ void MainWindow::startOver()
         delete m_system;
     m_system = new SystemTableModel(m_eq_count, ui->table_system);
     ui->table_system->setModel(m_system);
+    ui->pushbutton_toggle->setDisabled(true);
 }
 
 void MainWindow::showWorkspace()
@@ -109,7 +111,7 @@ void MainWindow::solveWithChosenMethod()
     Column result = m_solvers[method]->solve(A, b, x, EPSILON);
     if (m_solution != nullptr)
         delete m_solution;
-    m_solution = new SolutionTableModel({{ method, result, 0 }}, ui->table_system);
+    m_solution = new SolutionTableModel({{ method, result, 0 }});
     ui->table_solution->setModel(m_solution);
     ui->label_solution->show();
     ui->table_solution->show();
@@ -118,7 +120,6 @@ void MainWindow::solveWithChosenMethod()
     ui->progress->hide();
 }
 
-#include <iostream>
 void MainWindow::solveWithAllMethods()
 {
     DataRequestDialog dialog(m_eq_count);
@@ -138,11 +139,30 @@ void MainWindow::solveWithAllMethods()
     }
     if (m_solution != nullptr)
         delete m_solution;
-    m_solution = new SolutionTableModel(solutions, ui->table_system);
+    m_solution = new SolutionTableModel(solutions);
     ui->table_solution->setModel(m_solution);
     ui->label_solution->show();
     ui->table_solution->show();
     ui->label_fastest_method->show();
     enableWorkspace();
     ui->progress->hide();
+}
+
+void MainWindow::toggleSolution()
+{
+    bool hidden = ui->table_solution->isHidden();
+    if (hidden)
+    {
+        ui->label_solution->show();
+        ui->table_solution->show();
+        ui->label_fastest_method->show();
+        ui->pushbutton_toggle->setText("Hide last solution");
+    }
+    else
+    {
+        ui->label_solution->hide();
+        ui->table_solution->hide();
+        ui->label_fastest_method->hide();
+        ui->pushbutton_toggle->setText("Show last solution");
+    }
 }
