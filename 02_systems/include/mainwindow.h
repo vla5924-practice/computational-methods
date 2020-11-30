@@ -10,10 +10,17 @@
 #include <QMessageBox>
 #include <QPushButton>
 
+#include "method.h"
 #include "systemtablemodel.h"
 #include "solutiontablemodel.h"
 #include "lesystemsolver.h"
 #include "gaussmethodsolver.h"
+#include "kramermethodsolver.h"
+#include "seidelmethodsolver.h"
+#include "simpleiterationmethodsolver.h"
+#include "upperrelaxationmethodsolver.h"
+#include "jacobimethodsolver.h"
+#include "datarequestdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,15 +29,6 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
-    enum Method
-    {
-        GaussMethod,
-        KramerMethod,
-        SeidelMethod,
-        SimpleIterationMethod,
-        UpperRelaxationMethod
-    };
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -43,6 +41,7 @@ public slots:
     void enableWorkspace();
     void disableWorkspace();
     void solveWithChosenMethod();
+    void solveWithAllMethods();
 
 private:
     Ui::MainWindow *ui;

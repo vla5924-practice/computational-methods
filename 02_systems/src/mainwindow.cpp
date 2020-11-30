@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+constexpr double EPSILON = 1e-3;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -22,6 +24,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->table_system->setSelectionMode(QAbstractItemView::SingleSelection);
 
     m_solvers[GaussMethod] = new GaussMethodSolver;
+    m_solvers[KramerMethod] = new KramerMethodSolver;
+    m_solvers[SeidelMethod] = new SeidelMethodSolver;
+    m_solvers[SimpleIterationMethod] = new SimpleIterationMethodSolver;
+    m_solvers[UpperRelaxationMethod] = new UpperRelaxationMethodSolver;
+    m_solvers[JacobiMethod] = new JacobiMethodSolver;
 
     ui->progress->hide();
     ui->label_solution->hide();
@@ -30,11 +37,14 @@ MainWindow::MainWindow(QWidget *parent) :
     hideWorkspace();
     connect(ui->action_start, &QAction::triggered, this, &MainWindow::startOver);
     connect(ui->pushbutton_solve, &QPushButton::clicked, this, &MainWindow::solveWithChosenMethod);
+    connect(ui->pushbutton_solve_all, &QPushButton::clicked, this, &MainWindow::solveWithAllMethods);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    for (auto& solver : m_solvers)
+        delete solver;
 }
 
 void MainWindow::startOver()
@@ -51,7 +61,9 @@ void MainWindow::startOver()
     ui->progress->hide();
     ui->label_solution->hide();
     ui->table_solution->hide();
+    ui->label_fastest_method->hide();
     showWorkspace();
+    enableWorkspace();
     if (m_system != nullptr)
         delete m_system;
     m_system = new SystemTableModel(m_eq_count, ui->table_system);
@@ -84,23 +96,53 @@ void MainWindow::disableWorkspace()
 
 void MainWindow::solveWithChosenMethod()
 {
+    DataRequestDialog dialog(m_eq_count);
+    dialog.exec();
+    if (dialog.result() != QDialog::Accepted)
+        return;
     disableWorkspace();
     ui->progress->show();
     int method = ui->combobox_method->currentIndex();
     const Matrix &A = m_system->matrix();
     const Column &b = m_system->column();
-    Column result = m_solvers[method]->solve(A, b);
-
-    std::vector<Column> solutions = { {1, 2, 3}, {4, 5, 6}};
-    std::vector<double> durations = { 0.1, 2.3 };
+    const Column &x = dialog.resultColumn();
+    Column result = m_solvers[method]->solve(A, b, x, EPSILON);
+    Solution solution = { method, result, 0 };
     if (m_solution != nullptr)
         delete m_system;
-    m_solution = new SolutionTableModel(solutions, durations, ui->table_system);
+    m_solution = new SolutionTableModel({ solution }, ui->table_system);
     ui->table_solution->setModel(m_solution);
-
     ui->label_solution->show();
     ui->table_solution->show();
     ui->label_fastest_method->show();
-    //enableWorkspace();
-    //ui->progress->hide();
+    enableWorkspace();
+    ui->progress->hide();
+}
+
+void MainWindow::solveWithAllMethods()
+{
+    DataRequestDialog dialog(m_eq_count);
+    dialog.exec();
+    if (dialog.result() != QDialog::Accepted)
+        return;
+    disableWorkspace();
+    ui->progress->show();
+    const Matrix &A = m_system->matrix();
+    const Column &b = m_system->column();
+    const Column &x = dialog.resultColumn();
+    std::vector<Solution> solutions(6);
+    for (int method = 0; method < 6; method++)
+    {
+        Column result = m_solvers[method]->solve(A, b, x, EPSILON);
+        solutions.push_back({ method, result, 0 });
+    }
+    if (m_solution != nullptr)
+        delete m_system;
+    m_solution = new SolutionTableModel(solutions, ui->table_system);
+    ui->table_solution->setModel(m_solution);
+    ui->label_solution->show();
+    ui->table_solution->show();
+    ui->label_fastest_method->show();
+    enableWorkspace();
+    ui->progress->hide();
 }
