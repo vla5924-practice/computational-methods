@@ -25,3 +25,8 @@ Column KramerMethodSolver::solve(const Matrix& A, const Column& b, const Column&
       }
     return result;
 }
+
+bool KramerMethodSolver::needApproximation()
+{
+    return false;
+}

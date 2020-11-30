@@ -44,11 +44,11 @@ int LESystemSolver::rank(const Matrix &A)
 
 double LESystemSolver::determinant(const Matrix& A) {
     size_t size = A.size();
+    if (size == 1)
+        return A[0][0];
+    if (size == 2)
+        return  A[0][0] * A[1][1] - A[1][0] * A[0][1];
     double det = 0;
-    if (size == 2) {
-        det = A[0][0] * A[1][1] - A[1][0] * A[0][1];
-        return  det;
-    }
     for (size_t i = 0; i < size; i++) {
         Matrix tmp = A;
         tmp.erase(tmp.begin());

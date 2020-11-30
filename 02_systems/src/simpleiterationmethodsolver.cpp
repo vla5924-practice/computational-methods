@@ -22,3 +22,8 @@ Column SimpleIterationMethodSolver::solve(const Matrix& A, const Column& b, cons
     }
     return result;
 }
+
+bool SimpleIterationMethodSolver::needApproximation()
+{
+    return true;
+}

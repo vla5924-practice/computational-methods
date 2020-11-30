@@ -24,3 +24,8 @@ Column JacobiMethodSolver::solve(const Matrix& A, const Column& b, const Column&
     } while (norm > epsilon);
     return result;
 }
+
+bool JacobiMethodSolver::needApproximation()
+{
+    return true;
+}

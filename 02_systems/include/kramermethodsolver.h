@@ -13,6 +13,7 @@ public:
                  const Column& b,
                  const Column& = Column(),
                  double = 0) override;
+    bool needApproximation() override;
 };
 
 #endif // KRAMERMETHODSOLVER_H

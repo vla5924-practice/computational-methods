@@ -31,3 +31,8 @@ Column SeidelMethodSolver::solve(const Matrix& A, const Column& b, const Column&
       else; // TODO
       return result;
 }
+
+bool SeidelMethodSolver::needApproximation()
+{
+    return true;
+}

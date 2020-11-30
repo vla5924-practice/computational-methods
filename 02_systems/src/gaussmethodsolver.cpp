@@ -33,3 +33,8 @@ Column GaussMethodSolver::solve(const Matrix& A, const Column& b, const Column&,
     }
     return result;
 }
+
+bool GaussMethodSolver::needApproximation()
+{
+    return false;
+}

@@ -13,6 +13,7 @@ public:
                          const Column& b,
                          const Column& x = Column(),
                          double epsilon = 0) = 0;
+    virtual bool needApproximation() = 0;
 
     static int countNonzeroRows(const Matrix& A);
     static Matrix doGaussElimination(Matrix A);
