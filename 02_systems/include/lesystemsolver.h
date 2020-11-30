@@ -14,6 +14,9 @@ public:
                          const Column& x = Column(),
                          double epsilon = 0) = 0;
 
+    static int countNonzeroRows(const Matrix& A);
+    static Matrix doGaussElimination(Matrix A);
+    static int rank(const Matrix& A);
     static double determinant(const Matrix& A);
     static Column subtr(const Column& v1, const Column& v2);
     static Column mul_Z(Matrix A, Column v);

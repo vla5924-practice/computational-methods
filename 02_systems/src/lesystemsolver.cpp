@@ -1,5 +1,47 @@
 #include "lesystemsolver.h"
 
+int LESystemSolver::countNonzeroRows(const Matrix &A)
+{
+    int k = 0;
+    for (const auto& row : A)
+    {
+        for (const auto& el: row)
+        {
+            if (el != 0)
+            {
+                k++;
+                break;
+            }
+        }
+    }
+    return k;
+}
+
+Matrix LESystemSolver::doGaussElimination(Matrix A)
+{
+    // This method was not tested with non-square matrices!
+    size_t n = A[0].size();
+    for (size_t j = 0; j < n; j++)
+    {
+        double alfa = 0;
+        for (size_t i = j + 1; i < n; i++)
+        {
+            alfa = A[i][j] / A[j][j];
+            for (size_t k = j; k < n; k++)
+            {
+                A[i][k] -= alfa * A[j][k];
+            }
+        }
+    }
+    return A;
+}
+
+int LESystemSolver::rank(const Matrix &A)
+{
+    auto gauss = doGaussElimination(A);
+    return countNonzeroRows(gauss);
+}
+
 double LESystemSolver::determinant(const Matrix& A) {
     size_t size = A.size();
     double det = 0;
