@@ -5,6 +5,9 @@ SolutionTableModel::SolutionTableModel(const std::vector<Solution>& solutions,
     : QAbstractTableModel(parent), m_solutions(solutions)
 {
     m_eq_count = static_cast<int>(m_solutions[0].column.size());
+    for (auto& solution : m_solutions)
+        if (solution.column.size() != m_solutions[0].column.size())
+            solution.column.resize(m_eq_count, 0);
 }
 
 int SolutionTableModel::rowCount(const QModelIndex &) const
