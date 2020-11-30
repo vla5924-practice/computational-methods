@@ -56,7 +56,7 @@ void MainWindow::startOver()
                                         "Number of unknown variables",
                                         "Enter a number of unknown variables "
                                         "(from 1 to 16, this also will be a number of equations)",
-                                        1, 1, 16, 1, &ok);
+                                        2, 2, 16, 1, &ok);
     if (!ok)
         return;
     m_eq_count = eq_count;
@@ -107,13 +107,16 @@ void MainWindow::solveWithChosenMethod()
     }
 
     using Clock = std::chrono::high_resolution_clock;
+    int method = ui->combobox_method->currentIndex();
     DataRequestDialog dialog(m_eq_count);
-    dialog.exec();
-    if (dialog.result() != QDialog::Accepted)
-        return;
+    if (m_solvers[method]->needApproximation())
+    {
+        dialog.exec();
+        if (dialog.result() != QDialog::Accepted)
+            return;
+    }
     disableWorkspace();
     ui->progress->show();
-    int method = ui->combobox_method->currentIndex();
     const Column &b = m_system->column();
     const Column &x = dialog.resultColumn();
     Clock::time_point t1 = Clock::now();
@@ -126,7 +129,7 @@ void MainWindow::solveWithChosenMethod()
     ui->table_solution->setModel(m_solution);
     ui->label_solution->show();
     ui->table_solution->show();
-    ui->label_fastest_method->show();
+    ui->label_fastest_method->hide();
     enableWorkspace();
     ui->progress->hide();
 }
@@ -150,16 +153,25 @@ void MainWindow::solveWithAllMethods()
     const Column &b = m_system->column();
     const Column &x = dialog.resultColumn();
     std::vector<Solution> solutions;
+    int fastest = std::numeric_limits<double>::max();
+    int fastest_method = GaussMethod;
     for (int method = 0; method < METHODS_COUNT; method++)
     {
         Clock::time_point t1 = Clock::now();
         Column result = m_solvers[method]->solve(A, b, x, EPSILON);
         Clock::time_point t2 = Clock::now();
         std::chrono::duration<double> duration = t2 - t1;
-        solutions.push_back({ method, result, duration.count() });
+        double duration_s = duration.count();
+        if (duration_s < fastest)
+        {
+            fastest = duration_s;
+            fastest_method = method;
+        }
+        solutions.push_back({ method, result, duration_s });
     }
     if (m_solution != nullptr)
         delete m_solution;
+    ui->label_fastest_method->setText("The fastest method is " + methodName(fastest_method));
     m_solution = new SolutionTableModel(solutions);
     ui->table_solution->setModel(m_solution);
     ui->label_solution->show();
@@ -192,4 +204,21 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 {
     ui->verticalLayoutWidget->setFixedWidth(event->size().width() - 20);
     ui->verticalLayoutWidget->setFixedHeight(event->size().height() - 60);
+}
+
+QString MainWindow::methodName(int method)
+{
+    if (method == GaussMethod)
+        return "Gauss method";
+    if (method == KramerMethod)
+        return "Kramer method";
+    if (method == SeidelMethod)
+        return "Seidel method";
+    if (method == SimpleIterationMethod)
+        return "Simple iteration method";
+    if (method == UpperRelaxationMethod)
+        return "Upper relaxation method";
+    if (method == JacobiMethod)
+        return "Jacobi method";
+    return "Unknown method";
 }

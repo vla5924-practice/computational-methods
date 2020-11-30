@@ -48,6 +48,7 @@ public slots:
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
+    static QString methodName(int method);
 
 private:
     Ui::MainWindow *ui;
