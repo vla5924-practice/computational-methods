@@ -109,7 +109,7 @@ void MainWindow::solveWithChosenMethod()
     Column result = m_solvers[method]->solve(A, b, x, EPSILON);
     Solution solution = { method, result, 0 };
     if (m_solution != nullptr)
-        delete m_system;
+        delete m_solution;
     m_solution = new SolutionTableModel({ solution }, ui->table_system);
     ui->table_solution->setModel(m_solution);
     ui->label_solution->show();
@@ -119,6 +119,7 @@ void MainWindow::solveWithChosenMethod()
     ui->progress->hide();
 }
 
+#include <iostream>
 void MainWindow::solveWithAllMethods()
 {
     DataRequestDialog dialog(m_eq_count);
@@ -130,14 +131,14 @@ void MainWindow::solveWithAllMethods()
     const Matrix &A = m_system->matrix();
     const Column &b = m_system->column();
     const Column &x = dialog.resultColumn();
-    std::vector<Solution> solutions(6);
+    std::vector<Solution> solutions;
     for (int method = 0; method < 6; method++)
     {
         Column result = m_solvers[method]->solve(A, b, x, EPSILON);
         solutions.push_back({ method, result, 0 });
     }
     if (m_solution != nullptr)
-        delete m_system;
+        delete m_solution;
     m_solution = new SolutionTableModel(solutions, ui->table_system);
     ui->table_solution->setModel(m_solution);
     ui->label_solution->show();
