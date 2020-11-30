@@ -107,10 +107,9 @@ void MainWindow::solveWithChosenMethod()
     const Column &b = m_system->column();
     const Column &x = dialog.resultColumn();
     Column result = m_solvers[method]->solve(A, b, x, EPSILON);
-    Solution solution = { method, result, 0 };
     if (m_solution != nullptr)
         delete m_solution;
-    m_solution = new SolutionTableModel({ solution }, ui->table_system);
+    m_solution = new SolutionTableModel({{ method, result, 0 }}, ui->table_system);
     ui->table_solution->setModel(m_solution);
     ui->label_solution->show();
     ui->table_solution->show();
