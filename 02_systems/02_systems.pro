@@ -11,22 +11,41 @@ CONFIG += c++11
 INCLUDEPATH += \
     include
 
-SOURCES += \
-    src/gaussmethodsolver.cpp \
-    src/mainwindow.cpp \
-    src/main.cpp \
-    src/systemtablemodel.cpp \
-    src/solutiontablemodel.cpp
-
 HEADERS += \
+    include/firstapproximationtablemodel.h \
     include/gaussmethodsolver.h \
+    include/jacobimethodsolver.h \
+    include/kramermethodsolver.h \
     include/lesystemsolver.h \
     include/mainwindow.h \
     include/matrix.h \
+    include/method.h \
+    include/seidelmethodsolver.h \
+    include/simpleiterationmethodsolver.h \
+    include/solution.h \
     include/systemtablemodel.h \
-    include/solutiontablemodel.h
+    include/solutiontablemodel.h \
+    include/upperrelaxationmethodsolver.h \
+    include/datarequestdialog.h
+
+SOURCES += \
+    src/firstapproximationtablemodel.cpp \
+    src/gaussmethodsolver.cpp \
+    src/jacobimethodsolver.cpp \
+    src/kramermethodsolver.cpp \
+    src/lesystemsolver.cpp \
+    src/mainwindow.cpp \
+    src/main.cpp \
+    src/matrix.cpp \
+    src/seidelmethodsolver.cpp \
+    src/simpleiterationmethodsolver.cpp \
+    src/systemtablemodel.cpp \
+    src/solutiontablemodel.cpp \
+    src/upperrelaxationmethodsolver.cpp \
+    src/datarequestdialog.cpp
 
 FORMS += \
+    ui/datarequestdialog.ui \
     ui/mainwindow.ui
 
 # Default rules for deployment.
