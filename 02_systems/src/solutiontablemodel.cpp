@@ -34,7 +34,7 @@ QVariant SolutionTableModel::headerData(int column, Qt::Orientation orientation,
     if (role != Qt::DisplayRole)
         return QVariant();
     if (orientation == Qt::Vertical)
-        return column >= m_eq_count ? QString("Duration") : "x" + QString::fromStdString(std::to_string(column + 1));
+        return column >= m_eq_count ? QString("Duration") : "X" + QString::fromStdString(std::to_string(column + 1));
     int method = m_solutions[column].method;
     if (method == GaussMethod)
         return "Gauss method";

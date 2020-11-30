@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    setMinimumSize(600, 300);
     ui->setupUi(this);
     m_workspace.push_back(ui->label_system);
     m_workspace.push_back(ui->table_system);
@@ -165,4 +166,10 @@ void MainWindow::toggleSolution()
         ui->label_fastest_method->hide();
         ui->pushbutton_toggle->setText("Show last solution");
     }
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    ui->verticalLayoutWidget->setFixedWidth(event->size().width() - 20);
+    ui->verticalLayoutWidget->setFixedHeight(event->size().height() - 60);
 }

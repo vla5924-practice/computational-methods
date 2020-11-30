@@ -9,6 +9,7 @@
 #include <QWidget>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QResizeEvent>
 
 #include "method.h"
 #include "systemtablemodel.h"
@@ -43,6 +44,9 @@ public slots:
     void solveWithChosenMethod();
     void solveWithAllMethods();
     void toggleSolution();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     Ui::MainWindow *ui;
