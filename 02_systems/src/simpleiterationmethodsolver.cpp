@@ -6,7 +6,7 @@ Column SimpleIterationMethodSolver::solve(const Matrix& A, const Column& b, cons
     std::vector<double> x0(size);
     int iterCounter = 0;
     Column result = x;
-    double currentEps = secondVectorNorm(b - mul_Z(A, b));
+    double currentEps = secondVectorNorm(b - (A * b));
     while (currentEps > epsilon) {
         for (size_t i = 0; i < size; i++) {
             x0 = result;
@@ -17,7 +17,7 @@ Column SimpleIterationMethodSolver::solve(const Matrix& A, const Column& b, cons
             }
         result[i] = (tmpX + b[i]) / A[i][i];
         }
-        currentEps = secondVectorNorm(b - mul_Z(A, result));
+        currentEps = secondVectorNorm(b - (A * result));
         iterCounter++;
     }
     return result;

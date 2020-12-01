@@ -11,5 +11,6 @@ using Matrix = std::vector<Row>;
 Column operator+(const Column& left, const Column& right);
 Column operator-(const Column& left, const Column& right);
 Column operator*(const double& left, const Column& right);
+Column operator*(const Matrix& left, const Column& right);
 
 #endif // MATRIX_H

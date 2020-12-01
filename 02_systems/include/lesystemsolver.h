@@ -19,7 +19,6 @@ public:
     static Matrix doGaussElimination(Matrix A);
     static int rank(const Matrix& A);
     static double determinant(const Matrix& A);
-    static Column mul_Z(Matrix A, Column v);
     static Column mul_R(Matrix A, Column v, const double& coeff);
     static double secondVectorNorm(const Column& v);
     static bool converge(const Matrix& A);

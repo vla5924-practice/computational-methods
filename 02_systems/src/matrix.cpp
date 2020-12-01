@@ -30,3 +30,17 @@ Column operator-(const Column &left, const Column &right)
         result[i] = left[i] - right[i];
     return result;
 }
+
+Column operator*(const Matrix &left, const Column &right)
+{
+    size_t size = right.size();
+    Column result(size);
+    for (size_t i = 0; i < size; i++)
+    {
+        double sum = 0;
+        for (size_t j = 0; j < size; j++)
+            sum += left[i][j] * right[j];
+        result[i] = sum;
+    }
+    return result;
+}
