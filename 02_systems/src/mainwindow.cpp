@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-constexpr double EPSILON = 1e-3;
+constexpr double EPSILON = 1e-4;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
