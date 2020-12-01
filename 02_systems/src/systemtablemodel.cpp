@@ -55,7 +55,9 @@ bool SystemTableModel::setData(const QModelIndex &index, const QVariant &value, 
         emit dataChanged(index, index);
         return true;
     }
-    QMessageBox::warning(nullptr, "Error", "\"" + value.toString() + "\" is not a correct number.");
+    QString str = value.toString();
+    if (!str.isEmpty())
+        QMessageBox::warning(nullptr, "Error", "\"" + str + "\" is not a correct number.");
     return false;
 }
 

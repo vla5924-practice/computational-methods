@@ -37,16 +37,16 @@ QVariant SolutionTableModel::headerData(int column, Qt::Orientation orientation,
         return column >= m_eq_count ? QString("Duration") : "X" + QString::fromStdString(std::to_string(column + 1));
     int method = m_solutions[column].method;
     if (method == GaussMethod)
-        return "Gauss method";
+        return "Gauss";
     if (method == KramerMethod)
-        return "Kramer method";
+        return "Kramer";
     if (method == SeidelMethod)
-        return "Seidel method";
+        return "Seidel";
     if (method == SimpleIterationMethod)
-        return "Simple iteration method";
+        return "Simple iteration";
     if (method == UpperRelaxationMethod)
-        return "Upper relaxation method";
+        return "Upper relaxation";
     if (method == JacobiMethod)
-        return "Jacobi method";
-    return "Unknown method";
+        return "Jacobi";
+    return "Unknown";
 }

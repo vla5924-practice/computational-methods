@@ -184,7 +184,7 @@ void MainWindow::solveWithAllMethods()
     }
     if (m_solution != nullptr)
         delete m_solution;
-    ui->label_fastest_method->setText("The fastest method is " + methodName(fastest_method));
+    ui->label_fastest_method->setText("The fastest method is " + methodName(fastest_method) + ".");
     m_solution = new SolutionTableModel(solutions);
     ui->table_solution->setModel(m_solution);
     ui->label_solution->show();
