@@ -11,7 +11,7 @@ Column JacobiMethodSolver::solve(const Matrix& A, const Column& b, const Column&
            X_[i] = b[i];
            for (size_t g = 0; g < size; g++) {
                if (i != g)
-                   X_[i] -= A[i][g] * X_[g];
+                   X_[i] -= A[i][g] * result[g];
            }
            X_[i] /= A[i][i];
        }

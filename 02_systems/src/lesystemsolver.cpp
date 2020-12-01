@@ -60,20 +60,6 @@ double LESystemSolver::determinant(const Matrix& A) {
     return det;
 }
 
-Column LESystemSolver::subtr(const Column& v1, const Column& v2) {
-    Column result(v1.size());
-  if (v1.size() != v2.size()) {
-    // TODO
-  }
-  else {
-    size_t size = v1.size();
-    for (size_t i = 0; i < size; i++) {
-      result[i] = v1[i] - v2[i];
-    }
-  }
-  return result;
-}
-
 Column LESystemSolver::mul_Z(Matrix A, Column v) {
   size_t size = v.size();
   Column res(size);
@@ -96,18 +82,6 @@ Column LESystemSolver::mul_R(Matrix A, Column v, const double& coeff) {
       sum += A[i][j] * v[j];
     }
     res[i] = coeff * sum;
-  }
-  return res;
-}
-
-Column LESystemSolver::sum(Column v1, Column v2) {
-  size_t size = v1.size();
-  Column res(size);
-  if (v1.size() != v2.size()) {
-    return res;
-  }
-  for (size_t i = 0; i < size; i++) {
-    res[i] = v1[i] + v2[i];
   }
   return res;
 }

@@ -21,11 +21,11 @@ Column SeidelMethodSolver::solve(const Matrix& A, const Column& b, const Column&
 
       if (converge(alpha)) {
         int iterCounter = 0;
-        double currentEps = secondVectorNorm(subtr(b, mul_Z(A, result)));
+        double currentEps = secondVectorNorm(b - mul_Z(A, result));
         while (currentEps > epsilon) {
-          result = sum(beta, mul_Z(alpha, result));
+          result = beta + mul_Z(alpha, result);
           iterCounter++;
-          currentEps = secondVectorNorm(subtr(b, mul_Z(A, result)));
+          currentEps = secondVectorNorm(b - mul_Z(A, result));
         }
       }
       else; // TODO

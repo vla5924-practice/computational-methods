@@ -2,6 +2,7 @@
 #define UPPERRELAXATIONMETHODSOLVER_H
 
 #include <random>
+#include <stdexcept>
 
 #include "lesystemsolver.h"
 

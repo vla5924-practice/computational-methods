@@ -29,12 +29,14 @@ Column UpperRelaxationMethodSolver::solve(const Matrix& A, const Column& b, cons
     Column result = x;
     if (converge(alpha)) {
         int iterCounter = 0;
-        double currentEps = secondVectorNorm(subtr(b, mul_Z(A, result)));
+        double currentEps = secondVectorNorm(b - mul_Z(A, result));
         while (currentEps > epsilon) {
-          result = sum((1 - coeff) * result, sum(beta, mul_R(alpha, result, coeff)));
+          result = (1 - coeff) * result + beta + mul_R(alpha, result, coeff);
           iterCounter++;
-          currentEps = secondVectorNorm(subtr(b, mul_Z(A, result)));
+          currentEps = secondVectorNorm(b - mul_Z(A, result));
         }
+    } else {
+        throw std::runtime_error("Matrix does not converge.");
     }
     return result;
 }
