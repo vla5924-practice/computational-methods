@@ -161,6 +161,8 @@ void MainWindow::solveWithAllMethods()
     std::vector<Solution> solutions;
     double fastest = std::numeric_limits<double>::max();
     int fastest_method = GaussMethod;
+    bool was_errors = false;
+    QString errors;
     for (int method = 0; method < METHODS_COUNT; method++)
     {
         try {
@@ -176,9 +178,8 @@ void MainWindow::solveWithAllMethods()
             }
             solutions.push_back({ method, result, duration_s });
         }  catch (std::runtime_error& error) {
-            QMessageBox::information(this,
-                                     "Warning",
-                                     methodName(method) + " cannot be executed. " + error.what());
+            was_errors = true;
+            errors += methodName(method) + " cannot be executed. " + error.what() + "\n";
         }
 
     }
@@ -190,6 +191,8 @@ void MainWindow::solveWithAllMethods()
     ui->label_solution->show();
     ui->table_solution->show();
     ui->label_fastest_method->show();
+    if (was_errors)
+        QMessageBox::information(this, "Warning", errors);
     enableWorkspace();
     ui->progress->hide();
 }
