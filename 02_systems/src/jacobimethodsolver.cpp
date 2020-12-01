@@ -2,26 +2,28 @@
 
 Column JacobiMethodSolver::solve(const Matrix& A, const Column& b, const Column& x, double epsilon)
 {
+    if(hasZerosDiagonal(A))
+        throw std::runtime_error("Matrix has at least 1 zero on diagonal.");
     size_t size = b.size();
-    Column X_(size, 0);
-    Column result = x;
-    double norm;
-    do {
-       for (size_t i = 0; i < size; i++) {
-           X_[i] = b[i];
-           for (size_t g = 0; g < size; g++) {
-               if (i != g)
-                   X_[i] -= A[i][g] * result[g];
-           }
-           X_[i] /= A[i][i];
-       }
-       norm = fabs(result[0] - X_[0]);
-       for (size_t h = 0; h < size; h++) {
-           if (fabs(result[h] - X_[h]) > norm)
-               norm = fabs(x[h] - X_[h]);
-          result[h] = X_[h];
-       }
-    } while (norm > epsilon);
+    Column result = x, x_;
+    if (diagonal(A)) {
+        do {
+            x_ = result;
+            for (size_t i = 0; i < size; i++)
+            {
+                double var = 0;
+                for (size_t j = 0; j < i; j++) {
+                        var += (A[i][j] * x_[j]);
+                }
+                for (size_t j = i + 1; j < size; j++) {
+                        var += (A[i][j] * x_[j]);
+                }
+                result[i] = (b[i] - var) / A[i][i];
+            }
+        } while (!converge(result, x, epsilon));
+    } else {
+        throw std::runtime_error("Matrix does not converges.");
+    }
     return result;
 }
 

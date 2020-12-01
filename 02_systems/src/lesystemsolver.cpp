@@ -1,5 +1,39 @@
 #include "lesystemsolver.h"
 
+bool LESystemSolver::converge(const Column& xk, const Column& xkp, double eps)
+{
+    double norm = 0;
+    size_t size = xk.size();
+    for (size_t i = 0; i < size; i++)
+        norm += (xk[i] - xkp[i]) * (xk[i] - xkp[i]);
+    return (sqrt(norm) < eps);
+}
+
+bool LESystemSolver::diagonal(const Matrix& a)
+{
+    size_t size = a.size();
+    double sum = 0;
+    for (size_t i = 0; i < size; i++) {
+        sum = 0;
+        for (size_t j = 0; j < size; j++)
+            sum += abs(a[i][j]);
+        sum -= abs(a[i][i]);
+        if (sum > a[i][i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool LESystemSolver::hasZerosDiagonal(const Matrix& A) {
+    size_t size = A.size();
+    for(size_t i = 0; i < size; i++) {
+        if(A[i][i] == 0)
+            return true;
+    }
+    return false;
+}
+
 int LESystemSolver::countNonzeroRows(const Matrix &A)
 {
     int k = 0;
@@ -79,15 +113,4 @@ double LESystemSolver::secondVectorNorm(const Column& v) {
     tmpSum += pow(val, 2);
   }
   return sqrt(tmpSum);
-}
-
-bool LESystemSolver::converge(const Matrix& A) {
-    double sum = 0;
-    for (std::vector<double> v : A) {
-        for (double val : v) {
-        sum += pow(val, 2);
-        }
-    }
-    double eNorm = sqrt(sum);
-  return (eNorm < 1);
 }

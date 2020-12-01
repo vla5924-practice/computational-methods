@@ -15,7 +15,10 @@ public:
                          double epsilon = 0) = 0;
     virtual bool needApproximation() = 0;
 
+    static bool converge(const Column& xk, const Column& xkp, double eps);
+    static bool diagonal(const Matrix& a);
     static int countNonzeroRows(const Matrix& A);
+    static bool hasZerosDiagonal(const Matrix& A);
     static Matrix doGaussElimination(Matrix A);
     static int rank(const Matrix& A);
     static double determinant(const Matrix& A);

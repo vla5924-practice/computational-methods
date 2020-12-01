@@ -2,35 +2,27 @@
 
 Column SeidelMethodSolver::solve(const Matrix& A, const Column& b, const Column& x, double epsilon)
 {
-    Matrix alpha;
-    Column beta, result = x;
+    if(hasZerosDiagonal(A))
+        throw std::runtime_error("Matrix has at least 1 zero on diagonal.");
+    Column result = x, x_;
     size_t size = A.size();
-    for (size_t i = 0; i < size; i++) {
-        beta.push_back(b[i] / A[i][i]);
-      }
-
-      for (const std::vector<double>& v : A) {
-        alpha.push_back(v);
-      }
-      for (size_t i = 0; i < size; i++) {
-        for (size_t j = 0; j < size; j++) {
-          if (i != j) alpha[i][j] = -(A[i][j] / A[i][i]);
-          else alpha[i][j] = 0;
-        }
-      }
-
-      if (converge(alpha)) {
-        int iterCounter = 0;
-        double currentEps = secondVectorNorm(b - (A * result));
-        while (currentEps > epsilon) {
-          result = beta + (alpha * result);
-          iterCounter++;
-          currentEps = secondVectorNorm(b - (A * result));
-        }
-      }
-      else
-          throw std::runtime_error("Matrix does not converges.");
-      return result;
+    if (diagonal(A)) {
+        do {
+            x_ = result;
+            for (size_t i = 0; i < size; i++)
+            {
+                double var = 0;
+                for (size_t j = 0; j < i; j++)
+                    var += (A[i][j] * result[j]);
+                for (size_t j = i + 1; j < size; j++)
+                    var += (A[i][j] * x_[j]);
+                result[i] = (b[i] - var) / A[i][i];
+            }
+        } while (!converge(result, x, epsilon));
+    } else {
+        throw std::runtime_error("Matrix is not diagonal-predominant.");
+    }
+    return result;
 }
 
 bool SeidelMethodSolver::needApproximation()

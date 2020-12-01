@@ -17,6 +17,8 @@ public:
                  const Column& x = Column(),
                  double epsilon = 0) override;
     bool needApproximation() override;
+
+    static bool convergeMatrix(const Matrix& A);
 };
 
 #endif // UPPERRELAXATIONMETHODSOLVER_H
