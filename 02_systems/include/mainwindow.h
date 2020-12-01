@@ -4,6 +4,7 @@
 #include <list>
 #include <array>
 #include <chrono>
+#include <stdexcept>
 
 #include <QMainWindow>
 #include <QInputDialog>

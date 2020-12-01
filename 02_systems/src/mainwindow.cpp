@@ -117,19 +117,25 @@ void MainWindow::solveWithChosenMethod()
     }
     disableWorkspace();
     ui->progress->show();
-    const Column &b = m_system->column();
-    const Column &x = dialog.resultColumn();
-    Clock::time_point t1 = Clock::now();
-    Column result = m_solvers[method]->solve(A, b, x, EPSILON);
-    Clock::time_point t2 = Clock::now();
-    std::chrono::duration<double> duration = t2 - t1;
-    if (m_solution != nullptr)
-        delete m_solution;
-    m_solution = new SolutionTableModel({{ method, result, duration.count() }});
-    ui->table_solution->setModel(m_solution);
-    ui->label_solution->show();
-    ui->table_solution->show();
-    ui->label_fastest_method->hide();
+    try {
+        const Column &b = m_system->column();
+        const Column &x = dialog.resultColumn();
+        Clock::time_point t1 = Clock::now();
+        Column result = m_solvers[method]->solve(A, b, x, EPSILON);
+        Clock::time_point t2 = Clock::now();
+        std::chrono::duration<double> duration = t2 - t1;
+        if (m_solution != nullptr)
+            delete m_solution;
+        m_solution = new SolutionTableModel({{ method, result, duration.count() }});
+        ui->table_solution->setModel(m_solution);
+        ui->label_solution->show();
+        ui->table_solution->show();
+        ui->label_fastest_method->hide();
+    }  catch (std::runtime_error& error) {
+        QMessageBox::information(this,
+                                 "Warning",
+                                 methodName(method) + " cannot be executed. " + error.what());
+    }
     enableWorkspace();
     ui->progress->hide();
 }
@@ -153,21 +159,28 @@ void MainWindow::solveWithAllMethods()
     const Column &b = m_system->column();
     const Column &x = dialog.resultColumn();
     std::vector<Solution> solutions;
-    int fastest = std::numeric_limits<double>::max();
+    double fastest = std::numeric_limits<double>::max();
     int fastest_method = GaussMethod;
     for (int method = 0; method < METHODS_COUNT; method++)
     {
-        Clock::time_point t1 = Clock::now();
-        Column result = m_solvers[method]->solve(A, b, x, EPSILON);
-        Clock::time_point t2 = Clock::now();
-        std::chrono::duration<double> duration = t2 - t1;
-        double duration_s = duration.count();
-        if (duration_s < fastest)
-        {
-            fastest = duration_s;
-            fastest_method = method;
+        try {
+            Clock::time_point t1 = Clock::now();
+            Column result = m_solvers[method]->solve(A, b, x, EPSILON);
+            Clock::time_point t2 = Clock::now();
+            std::chrono::duration<double> duration = t2 - t1;
+            double duration_s = duration.count();
+            if (duration_s < fastest)
+            {
+                fastest = duration_s;
+                fastest_method = method;
+            }
+            solutions.push_back({ method, result, duration_s });
+        }  catch (std::runtime_error& error) {
+            QMessageBox::information(this,
+                                     "Warning",
+                                     methodName(method) + " cannot be executed. " + error.what());
         }
-        solutions.push_back({ method, result, duration_s });
+
     }
     if (m_solution != nullptr)
         delete m_solution;
