@@ -8,10 +8,8 @@ Column UpperRelaxationMethodSolver::solve(const Matrix& A, const Column& b, cons
         throw std::runtime_error("Matrix is not diagonal-predominant.");
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dist(1, 2);
+    std::uniform_real_distribution<> dist(1.0001, 1.9999);
     double coef = dist(gen);
-    Matrix alpha;
-    Column beta;
     size_t size = A.size();
     Column x_curr = x;
     Column x_prev;
@@ -26,18 +24,14 @@ Column UpperRelaxationMethodSolver::solve(const Matrix& A, const Column& b, cons
             for (size_t j = i + 1; j < size; j++)
                 var += A[i][j] * x_prev[j];
             x_curr[i] = (b[i] - var) * coef / A[i][i];
+            if (x_curr[i] == std::numeric_limits<double>::quiet_NaN()
+             || x_curr[i] == std::numeric_limits<double>::signaling_NaN()
+             || x_curr[i] == std::numeric_limits<double>::infinity()
+             || x_curr[i] == -std::numeric_limits<double>::infinity())
+                throw std::runtime_error("Computational collision: bad omega parameter.");
         }
     } while (!converge(x_curr, x_prev, epsilon));
     return x_curr;
-}
-
-bool UpperRelaxationMethodSolver::convergeMatrix(const Matrix& A)
-{
-    double sum = 0;
-    for (const auto& row : A)
-        for (double el : row)
-            sum += pow(el, 2);
-    return sqrt(sum) < 1;
 }
 
 bool UpperRelaxationMethodSolver::needApproximation()
