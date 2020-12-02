@@ -23,12 +23,7 @@ Column UpperRelaxationMethodSolver::solve(const Matrix& A, const Column& b, cons
                 var += A[i][j] * x_curr[j];
             for (size_t j = i + 1; j < size; j++)
                 var += A[i][j] * x_prev[j];
-            x_curr[i] = (b[i] - var) * coef / A[i][i];
-            if (x_curr[i] == std::numeric_limits<double>::quiet_NaN()
-             || x_curr[i] == std::numeric_limits<double>::signaling_NaN()
-             || x_curr[i] == std::numeric_limits<double>::infinity()
-             || x_curr[i] == -std::numeric_limits<double>::infinity())
-                throw std::runtime_error("Computational collision: bad omega parameter.");
+            x_curr[i] = (b[i] - var) * coef / A[i][i] - x_prev[i] * (coef - 1);
         }
     } while (!converge(x_curr, x_prev, epsilon));
     return x_curr;

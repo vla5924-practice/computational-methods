@@ -52,20 +52,6 @@ double LESystemSolver::determinant(const Matrix& A)
     return det;
 }
 
-Column LESystemSolver::mul_R(const Matrix& A, const Column& v, double coef)
-{
-    size_t size = v.size();
-    Column result(size);
-    for (size_t i = 0; i < size; i++)
-    {
-        double sum = 0;
-        for (size_t j = 0; j < size; j++)
-            sum += A[i][j] * v[j];
-        result[i] = coef * sum;
-    }
-    return result;
-}
-
 double LESystemSolver::secondVectorNorm(const Column& v)
 {
     double sum = 0;

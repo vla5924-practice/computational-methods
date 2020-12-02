@@ -19,7 +19,6 @@ public:
     static bool diagonalPredominant(const Matrix& A);
     static bool hasZerosDiagonal(const Matrix& A);
     static double determinant(const Matrix& A);
-    static Column mul_R(const Matrix& A, const Column& v, double coef);
     static double secondVectorNorm(const Column& v);
 };
 
