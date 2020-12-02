@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_workspace.push_back(ui->pushbutton_solve);
     m_workspace.push_back(ui->pushbutton_solve_all);
     m_workspace.push_back(ui->pushbutton_toggle);
+    m_workspace.push_back(ui->label_hint);
 
     m_system = nullptr;
     m_solution = nullptr;

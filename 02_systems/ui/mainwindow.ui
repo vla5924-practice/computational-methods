@@ -72,6 +72,13 @@
          <item>
           <widget class="QTableView" name="table_system"/>
          </item>
+         <item>
+          <widget class="QLabel" name="label_hint">
+           <property name="text">
+            <string>Hint: double-click on cells to edit numbers.</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
