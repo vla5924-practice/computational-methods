@@ -34,7 +34,6 @@ MainWindow::MainWindow(QWidget *parent) :
     m_solvers[UpperRelaxationMethod] = new UpperRelaxationMethodSolver;
     m_solvers[LUDecompositionMethod] = new LUDecompositionMethodSolver;
 
-    ui->progress->hide();
     ui->label_solution->hide();
     ui->table_solution->hide();
     ui->label_fastest_method->hide();
@@ -63,7 +62,6 @@ void MainWindow::startOver()
     if (!ok)
         return;
     m_eq_count = eq_count;
-    ui->progress->hide();
     ui->label_solution->hide();
     ui->table_solution->hide();
     ui->label_fastest_method->hide();
@@ -120,7 +118,6 @@ void MainWindow::solveWithChosenMethod()
             return;
     }
     disableWorkspace();
-    ui->progress->show();
     try {
         const Column &x = dialog.resultColumn();
         Clock::time_point t1 = Clock::now();
@@ -140,7 +137,6 @@ void MainWindow::solveWithChosenMethod()
                                  methodName(method) + " cannot be executed. " + error.what());
     }
     enableWorkspace();
-    ui->progress->hide();
 }
 
 void MainWindow::solveWithAllMethods()
@@ -159,7 +155,6 @@ void MainWindow::solveWithAllMethods()
     if (dialog.result() != QDialog::Accepted)
         return;
     disableWorkspace();
-    ui->progress->show();
     const Column &x = dialog.resultColumn();
     std::vector<Solution> solutions;
     double fastest = std::numeric_limits<double>::max();
@@ -197,7 +192,6 @@ void MainWindow::solveWithAllMethods()
     if (was_errors)
         QMessageBox::information(this, "Warning", "Some methods were not executed.\n\n" + errors);
     enableWorkspace();
-    ui->progress->hide();
 }
 
 void MainWindow::toggleSolution()
