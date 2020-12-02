@@ -43,6 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushbutton_solve, &QPushButton::clicked, this, &MainWindow::solveWithChosenMethod);
     connect(ui->pushbutton_solve_all, &QPushButton::clicked, this, &MainWindow::solveWithAllMethods);
     connect(ui->pushbutton_toggle, &QPushButton::clicked, this, &MainWindow::toggleSolution);
+    connect(ui->action_help, &QAction::triggered, this, &MainWindow::showHelpDialog);
+    connect(ui->action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
 }
 
 MainWindow::~MainWindow()
@@ -50,6 +52,18 @@ MainWindow::~MainWindow()
     delete ui;
     for (auto& solver : m_solvers)
         delete solver;
+}
+
+void MainWindow::showAboutDialog()
+{
+    AboutDialog dialog;
+    dialog.exec();
+}
+
+void MainWindow::showHelpDialog()
+{
+    HelpDialog dialog;
+    dialog.exec();
 }
 
 void MainWindow::startOver()

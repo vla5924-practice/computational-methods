@@ -24,6 +24,8 @@
 #include "upperrelaxationmethodsolver.h"
 #include "ludecompositionmethodsolver.h"
 #include "datarequestdialog.h"
+#include "aboutdialog.h"
+#include "helpdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -38,6 +40,8 @@ public:
     ~MainWindow();
 
 public slots:
+    void showAboutDialog();
+    void showHelpDialog();
     void startOver();
     void showWorkspace();
     void hideWorkspace();

@@ -26,7 +26,9 @@ HEADERS += \
     include/systemtablemodel.h \
     include/solutiontablemodel.h \
     include/upperrelaxationmethodsolver.h \
-    include/datarequestdialog.h
+    include/datarequestdialog.h \
+    include/aboutdialog.h \
+    include/helpdialog.h
 
 SOURCES += \
     src/firstapproximationtablemodel.cpp \
@@ -42,11 +44,15 @@ SOURCES += \
     src/systemtablemodel.cpp \
     src/solutiontablemodel.cpp \
     src/upperrelaxationmethodsolver.cpp \
-    src/datarequestdialog.cpp
+    src/datarequestdialog.cpp \
+    src/aboutdialog.cpp \
+    src/helpdialog.cpp
 
 FORMS += \
     ui/datarequestdialog.ui \
-    ui/mainwindow.ui
+    ui/mainwindow.ui \
+    ui/aboutdialog.ui \
+    ui/helpdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
