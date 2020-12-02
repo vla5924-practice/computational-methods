@@ -1,7 +1,7 @@
 #include "firstapproximationtablemodel.h"
 
-FirstApproximationTableModel::FirstApproximationTableModel(int eq_count, QObject *parent)
-    : QAbstractTableModel(parent), m_eq_count(eq_count), m_column(eq_count, 0.0)
+FirstApproximationTableModel::FirstApproximationTableModel(const Column& column, QObject *parent)
+    : QAbstractTableModel(parent), m_column(column)
 {
 }
 
@@ -17,7 +17,7 @@ int FirstApproximationTableModel::rowCount(const QModelIndex &) const
 
 int FirstApproximationTableModel::columnCount(const QModelIndex &) const
 {
-    return m_eq_count;
+    return static_cast<int>(m_column.size());
 }
 
 QVariant FirstApproximationTableModel::data(const QModelIndex &index, int role) const

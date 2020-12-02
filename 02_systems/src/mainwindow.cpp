@@ -24,12 +24,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->table_system->setSelectionBehavior(QAbstractItemView::SelectItems);
     ui->table_system->setSelectionMode(QAbstractItemView::SingleSelection);
 
+    for (int method = 0; method < METHODS_COUNT; method++)
+        ui->combobox_method->addItem(methodName(method));
+
     m_solvers[GaussMethod] = new GaussMethodSolver;
     m_solvers[KramerMethod] = new KramerMethodSolver;
     m_solvers[SeidelMethod] = new SeidelMethodSolver;
-    m_solvers[JacobiMethod] = new JacobiMethodSolver;
     m_solvers[SimpleIterationMethod] = new SimpleIterationMethodSolver;
     m_solvers[UpperRelaxationMethod] = new UpperRelaxationMethodSolver;
+    m_solvers[LUDecompositionMethod] = new LUDecompositionMethodSolver;
 
     ui->progress->hide();
     ui->label_solution->hide();
@@ -108,7 +111,8 @@ void MainWindow::solveWithChosenMethod()
 
     using Clock = std::chrono::high_resolution_clock;
     int method = ui->combobox_method->currentIndex();
-    DataRequestDialog dialog(m_eq_count);
+    const Column &b = m_system->column();
+    DataRequestDialog dialog(b);
     if (m_solvers[method]->needApproximation())
     {
         dialog.exec();
@@ -118,7 +122,6 @@ void MainWindow::solveWithChosenMethod()
     disableWorkspace();
     ui->progress->show();
     try {
-        const Column &b = m_system->column();
         const Column &x = dialog.resultColumn();
         Clock::time_point t1 = Clock::now();
         Column result = m_solvers[method]->solve(A, b, x, EPSILON);
@@ -150,13 +153,13 @@ void MainWindow::solveWithAllMethods()
     }
 
     using Clock = std::chrono::high_resolution_clock;
-    DataRequestDialog dialog(m_eq_count);
+    const Column &b = m_system->column();
+    DataRequestDialog dialog(b);
     dialog.exec();
     if (dialog.result() != QDialog::Accepted)
         return;
     disableWorkspace();
     ui->progress->show();
-    const Column &b = m_system->column();
     const Column &x = dialog.resultColumn();
     std::vector<Solution> solutions;
     double fastest = std::numeric_limits<double>::max();
@@ -179,7 +182,7 @@ void MainWindow::solveWithAllMethods()
             solutions.push_back({ method, result, duration_s });
         }  catch (std::runtime_error& error) {
             was_errors = true;
-            errors += methodName(method) + " cannot be executed. " + error.what() + "\n";
+            errors += methodName(method) + ": " + error.what() + "\n";
         }
 
     }
@@ -192,7 +195,7 @@ void MainWindow::solveWithAllMethods()
     ui->table_solution->show();
     ui->label_fastest_method->show();
     if (was_errors)
-        QMessageBox::information(this, "Warning", errors);
+        QMessageBox::information(this, "Warning", "Some methods were not executed.\n\n" + errors);
     enableWorkspace();
     ui->progress->hide();
 }
@@ -234,7 +237,7 @@ QString MainWindow::methodName(int method)
         return "Simple iteration method";
     if (method == UpperRelaxationMethod)
         return "Upper relaxation method";
-    if (method == JacobiMethod)
-        return "Jacobi method";
+    if (method == LUDecompositionMethod)
+        return "LU-decomposition method";
     return "Unknown method";
 }

@@ -30,38 +30,7 @@
         <enum>QLayout::SetMaximumSize</enum>
        </property>
        <item>
-        <widget class="QComboBox" name="combobox_method">
-         <item>
-          <property name="text">
-           <string>Gauss method</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Kramer method</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Seidel method</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Jacobi method</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Simple iteration method</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Upper relaxation method</string>
-          </property>
-         </item>
-        </widget>
+        <widget class="QComboBox" name="combobox_method"/>
        </item>
        <item>
         <widget class="QPushButton" name="pushbutton_solve">

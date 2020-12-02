@@ -14,7 +14,7 @@ class DataRequestDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit DataRequestDialog(int eq_count, QWidget *parent = nullptr);
+    explicit DataRequestDialog(const Column& column, QWidget *parent = nullptr);
     ~DataRequestDialog();
 
     const Column& resultColumn() const;

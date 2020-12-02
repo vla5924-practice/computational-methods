@@ -14,7 +14,7 @@ INCLUDEPATH += \
 HEADERS += \
     include/firstapproximationtablemodel.h \
     include/gaussmethodsolver.h \
-    include/jacobimethodsolver.h \
+    include/ludecompositionmethodsolver.h \
     include/kramermethodsolver.h \
     include/lesystemsolver.h \
     include/mainwindow.h \
@@ -31,7 +31,7 @@ HEADERS += \
 SOURCES += \
     src/firstapproximationtablemodel.cpp \
     src/gaussmethodsolver.cpp \
-    src/jacobimethodsolver.cpp \
+    src/ludecompositionmethodsolver.cpp \
     src/kramermethodsolver.cpp \
     src/lesystemsolver.cpp \
     src/mainwindow.cpp \

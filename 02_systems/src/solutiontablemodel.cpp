@@ -46,7 +46,7 @@ QVariant SolutionTableModel::headerData(int column, Qt::Orientation orientation,
         return "Simple iteration";
     if (method == UpperRelaxationMethod)
         return "Upper relaxation";
-    if (method == JacobiMethod)
-        return "Jacobi";
+    if (method == LUDecompositionMethod)
+        return "LU-decomp.";
     return "Unknown";
 }

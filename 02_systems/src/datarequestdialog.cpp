@@ -1,13 +1,13 @@
 #include "datarequestdialog.h"
 #include "ui_datarequestdialog.h"
 
-DataRequestDialog::DataRequestDialog(int eq_count, QWidget *parent) :
+DataRequestDialog::DataRequestDialog(const Column& column, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DataRequestDialog)
 {
     ui->setupUi(this);
 
-    m_model = new FirstApproximationTableModel(eq_count);
+    m_model = new FirstApproximationTableModel(column);
 
     ui->table_approx->setModel(m_model);
     ui->table_approx->horizontalHeader()->setStretchLastSection(false);

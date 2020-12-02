@@ -22,7 +22,7 @@
 #include "seidelmethodsolver.h"
 #include "simpleiterationmethodsolver.h"
 #include "upperrelaxationmethodsolver.h"
-#include "jacobimethodsolver.h"
+#include "ludecompositionmethodsolver.h"
 #include "datarequestdialog.h"
 
 namespace Ui {
