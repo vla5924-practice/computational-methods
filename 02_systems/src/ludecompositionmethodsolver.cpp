@@ -2,6 +2,9 @@
 
 Column LUDecompositionMethodSolver::solve(const Matrix& A, const Column& b, const Column&, double)
 {
+    if (A[0][0] == 0)
+        throw std::runtime_error("The upper-left element is zero, but nothing cannot be divided by zero.");
+
     size_t size = A.size();
     Matrix L(size), U(size);
 
@@ -50,7 +53,7 @@ Column LUDecompositionMethodSolver::solve(const Matrix& A, const Column& b, cons
     }
 
     Column result(size, 0);
-    for (int i = size - 1; i >= 0; i--)
+    for (size_t i = size - 1; i + 1 > 0; i--)
     {
         double sum = 0.0;
         for (size_t j = i + 1; j < size; j++)

@@ -2,6 +2,9 @@
 
 Column GaussMethodSolver::solve(const Matrix& A, const Column& b, const Column&, double)
 {
+    if(hasZerosDiagonal(A))
+        throw std::runtime_error("Matrix has at least 1 zero on diagonal, the permutation of rows can be used to deal with it but it is not implemented yet.");
+
     Matrix A_ = A;
     Column B_ = b;
     int i, j, k;
