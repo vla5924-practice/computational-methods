@@ -35,6 +35,12 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="minimum">
+      <double>-10000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>10000.000000000000000</double>
+     </property>
     </widget>
     <widget class="QLabel" name="label_4">
      <property name="geometry">
@@ -64,6 +70,12 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="minimum">
+      <double>-10000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>10000.000000000000000</double>
+     </property>
     </widget>
     <widget class="QLabel" name="label_5">
      <property name="geometry">
@@ -92,6 +104,12 @@
        <width>91</width>
        <height>22</height>
       </rect>
+     </property>
+     <property name="minimum">
+      <double>-10000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>10000.000000000000000</double>
      </property>
     </widget>
     <widget class="QLabel" name="label_6">
@@ -148,6 +166,12 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="minimum">
+      <double>-10000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>10000.000000000000000</double>
+     </property>
     </widget>
     <widget class="QDoubleSpinBox" name="segment_end">
      <property name="geometry">
@@ -157,6 +181,12 @@
        <width>91</width>
        <height>22</height>
       </rect>
+     </property>
+     <property name="minimum">
+      <double>-10000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>10000.000000000000000</double>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">
@@ -180,6 +210,15 @@
        <width>91</width>
        <height>22</height>
       </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>10000</number>
+     </property>
+     <property name="value">
+      <number>1</number>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
