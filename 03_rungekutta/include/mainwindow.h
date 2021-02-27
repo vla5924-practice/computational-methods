@@ -32,11 +32,9 @@ public:
 public slots:
     void showAboutDialog();
     void showHelpDialog();
+    void startOver();
     void clear();
     void solve();
-
-protected:
-    void resizeEvent(QResizeEvent *event) override;
 
 private:
     Ui::MainWindow *ui;

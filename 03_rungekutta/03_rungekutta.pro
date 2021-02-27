@@ -14,6 +14,8 @@ INCLUDEPATH += \
 HEADERS += \
     include/abstractequationsystem.h \
     include/mainwindow.h \
+    include/myequationsystem.h \
+    include/rkmethodsolver.h \
     include/solutiontablemodel.h \
     include/aboutdialog.h \
     include/helpdialog.h
@@ -22,6 +24,8 @@ SOURCES += \
     src/abstractequationsystem.cpp \
     src/mainwindow.cpp \
     src/main.cpp \
+    src/myequationsystem.cpp \
+    src/rkmethodsolver.cpp \
     src/solutiontablemodel.cpp \
     src/aboutdialog.cpp \
     src/helpdialog.cpp

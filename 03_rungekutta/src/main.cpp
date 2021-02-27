@@ -1,11 +1,13 @@
 #include <QApplication>
 
+#include "myequationsystem.h"
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+    QApplication app(argc, argv);
+    MyEquationSystem system;
+    MainWindow window(&system);
+    window.show();
+    return app.exec();
 }
