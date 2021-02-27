@@ -1,5 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "mvlatelemetry.h"
+#include "mocktelemetry.h"
+
+#define SEND_TELEMETRY(DATA) m_telemetry->sendData(DATA)
+#define SEND_TELEMETRY_ACTION(ACTION) m_telemetry->sendData(QJsonObject{{ "action", (ACTION) }})
 
 MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
     QMainWindow(parent),
@@ -10,6 +15,11 @@ MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
 
     m_system = system;
     m_solution = nullptr;
+#ifdef ENABLE_TELEMETRY
+    m_telemetry = new MVlaTelemetry();
+#else
+    m_telemetry = new MockTelemetry();
+#endif
 
     ui->eq_1->setText(" = " + m_system->f1Str());
     ui->eq_2->setText(" = " + m_system->f2Str());
@@ -19,30 +29,35 @@ MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
     connect(ui->solve, &QPushButton::clicked, this, &MainWindow::solve);
     connect(ui->action_help, &QAction::triggered, this, &MainWindow::showHelpDialog);
     connect(ui->action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
+
+    SEND_TELEMETRY_ACTION("launch");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete  m_telemetry;
     if (m_solution != nullptr)
         delete m_solution;
 }
 
 void MainWindow::showAboutDialog()
 {
+    SEND_TELEMETRY_ACTION("show_about");
     AboutDialog dialog;
     dialog.exec();
 }
 
 void MainWindow::showHelpDialog()
 {
+    SEND_TELEMETRY_ACTION("show_help");
     HelpDialog dialog;
     dialog.exec();
 }
 
 void MainWindow::startOver()
 {
-
+    SEND_TELEMETRY_ACTION("start_over");
 }
 
 void MainWindow::solve()
@@ -55,6 +70,21 @@ void MainWindow::solve()
         ui->inix_y->value(),
         ui->init_z->value()
     };
+    {
+        QJsonObject data
+        {
+            { "action", "solve" },
+            { "a", a },
+            { "b", b },
+            { "n", n }
+        };
+        QJsonArray arr;
+        arr.append(init_conditions[0]);
+        arr.append(init_conditions[1]);
+        arr.append(init_conditions[2]);
+        data.insert("init_conditions", arr);
+        SEND_TELEMETRY(data);
+    }
     RKMethodSolver solver(m_system);
     std::vector<std::array<double, 4>> solutions;
     try
