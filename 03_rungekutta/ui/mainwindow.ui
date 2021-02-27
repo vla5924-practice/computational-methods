@@ -224,40 +224,127 @@
     <widget class="QLabel" name="eq_1">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>20</x>
        <y>20</y>
-       <width>161</width>
+       <width>151</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>Eq. 1</string>
+      <string> = f1(x, y, z)</string>
      </property>
     </widget>
     <widget class="QLabel" name="eq_2">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>20</x>
        <y>50</y>
-       <width>161</width>
+       <width>151</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>Eq. 2</string>
+      <string> = f2(x, y, z)</string>
      </property>
     </widget>
     <widget class="QLabel" name="eq_3">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>20</x>
        <y>80</y>
-       <width>161</width>
+       <width>151</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>Eq. 3</string>
+      <string> = f3(x, y, z)</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;u&gt;dx&lt;/u&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>dt</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;u&gt;dy&lt;/u&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>dt</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_11">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;u&gt;dz&lt;/u&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_12">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>dt</string>
      </property>
     </widget>
    </widget>
@@ -267,7 +354,7 @@
       <x>210</x>
       <y>10</y>
       <width>441</width>
-      <height>351</height>
+      <height>381</height>
      </rect>
     </property>
     <property name="title">
@@ -279,23 +366,10 @@
        <x>10</x>
        <y>20</y>
        <width>421</width>
-       <height>321</height>
+       <height>351</height>
       </rect>
      </property>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="clear">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>370</y>
-      <width>181</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Clear</string>
-    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

@@ -34,7 +34,6 @@ public slots:
     void showAboutDialog();
     void showHelpDialog();
     void startOver();
-    void clear();
     void solve();
 
 private:
