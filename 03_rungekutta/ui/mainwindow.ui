@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>Initial parameters</string>
+     <string>Initial conditions</string>
     </property>
     <widget class="QDoubleSpinBox" name="init_x">
      <property name="geometry">

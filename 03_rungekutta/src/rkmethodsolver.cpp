@@ -15,6 +15,9 @@ std::vector<std::array<double, 4>> RKMethodSolver::solve(double a, double b, int
     if (n <= 0)
         throw std::runtime_error("Number of steps must be greater than zero.");
 
+    if (b <= a)
+        throw std::runtime_error("Ending point must be greater than starting point.");
+
     double h = (b - a) / n;
     double t = a + h;
 
