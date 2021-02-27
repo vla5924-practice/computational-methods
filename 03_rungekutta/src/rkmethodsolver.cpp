@@ -1,5 +1,7 @@
 #include "rkmethodsolver.h"
 
+#include <stdexcept>
+
 constexpr double NO_PARAM = 0; // TODO: Impl f1 and f2 use as f3 in RKMethodSolver::solve
 
 RKMethodSolver::RKMethodSolver(AbstractEquationSystem *system)

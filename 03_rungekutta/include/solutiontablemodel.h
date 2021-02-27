@@ -4,7 +4,6 @@
 #include <vector>
 
 #include <QAbstractTableModel>
-#include <QMessageBox>
 
 class SolutionTableModel : public QAbstractTableModel
 {

@@ -2,7 +2,6 @@
 
 #include <array>
 #include <vector>
-#include <stdexcept>
 
 #include "abstractequationsystem.h"
 

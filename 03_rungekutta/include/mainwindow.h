@@ -1,21 +1,10 @@
 #pragma once
 
 #include <QMainWindow>
-#include <QInputDialog>
 #include <QWidget>
-#include <QMessageBox>
-#include <QPushButton>
-#include <QResizeEvent>
-#include <QJsonArray>
-#include <QJsonObject>
 
-#include "config.h"
-#include "abstracttelemetry.h"
 #include "abstractequationsystem.h"
 #include "solutiontablemodel.h"
-#include "rkmethodsolver.h"
-#include "aboutdialog.h"
-#include "helpdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -39,5 +28,4 @@ private:
     Ui::MainWindow *ui;
     AbstractEquationSystem *m_system;
     SolutionTableModel *m_solution;
-    AbstractTelemetry* m_telemetry;
 };

@@ -1,10 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "mvlatelemetry.h"
-#include "mocktelemetry.h"
 
-#define SEND_TELEMETRY(DATA) m_telemetry->sendData(DATA)
-#define SEND_TELEMETRY_ACTION(ACTION) m_telemetry->sendData(QJsonObject{{ "action", (ACTION) }})
+#include <QMessageBox>
+#include <QPushButton>
+#include <QJsonArray>
+#include <QJsonObject>
+
+#include "rkmethodsolver.h"
+#include "aboutdialog.h"
+#include "helpdialog.h"
+#include "telemetry/inc.h"
 
 MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
     QMainWindow(parent),
@@ -15,11 +20,6 @@ MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
 
     m_system = system;
     m_solution = nullptr;
-#ifdef ENABLE_TELEMETRY
-    m_telemetry = new MVlaTelemetry();
-#else
-    m_telemetry = new MockTelemetry();
-#endif
 
     ui->eq_1->setText(" = " + m_system->f1Str());
     ui->eq_2->setText(" = " + m_system->f2Str());
@@ -36,7 +36,6 @@ MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete  m_telemetry;
     if (m_solution != nullptr)
         delete m_solution;
 }
