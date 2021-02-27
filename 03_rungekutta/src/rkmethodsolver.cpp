@@ -10,6 +10,9 @@ RKMethodSolver::RKMethodSolver(AbstractEquationSystem *system)
 std::vector<std::array<double, 4>> RKMethodSolver::solve(double a, double b, int n,
                                                          const std::array<double, 3> &init_conditions)
 {
+    if (n <= 0)
+        throw std::runtime_error("Number of steps must be greater than zero.");
+
     double h = (b - a) / n;
     double t = a + h;
 

@@ -62,7 +62,15 @@ void MainWindow::solve()
         ui->init_z->value()
     };
     RKMethodSolver solver(m_system);
-    auto solutions = solver.solve(a, b, n, init_conditions);
+    std::vector<std::array<double, 4>> solutions;
+    try
+    {
+        solutions = solver.solve(a, b, n, init_conditions);
+    }
+    catch (std::exception& e)
+    {
+        QMessageBox::warning(this, "Computation error", e.what());
+    }
     if (m_solution != nullptr)
         delete m_solution;
     m_solution = new SolutionTableModel(solutions, ui->solution);
