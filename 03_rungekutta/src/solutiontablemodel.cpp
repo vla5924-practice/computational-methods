@@ -31,7 +31,7 @@ QVariant SolutionTableModel::headerData(int column, Qt::Orientation orientation,
     if (role != Qt::DisplayRole)
         return QVariant();
     if (orientation == Qt::Vertical)
-        return column;
+        return column + 1;
     if (column == 0)
         return "x";
     if (column == 1)

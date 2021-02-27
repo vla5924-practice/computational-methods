@@ -11,6 +11,10 @@ MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
     m_system = system;
     m_solution = nullptr;
 
+    ui->eq_1->setText(m_system->f1Str());
+    ui->eq_2->setText(m_system->f2Str());
+    ui->eq_3->setText(m_system->f3Str());
+
     connect(ui->action_start, &QAction::triggered, this, &MainWindow::startOver);
     connect(ui->solve, &QPushButton::clicked, this, &MainWindow::solve);
     connect(ui->clear, &QPushButton::clicked, this, &MainWindow::clear);

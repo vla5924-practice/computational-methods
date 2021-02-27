@@ -2,9 +2,9 @@
 
 MyEquationSystem::MyEquationSystem()
 {
-    m_f1 = "";
-    m_f2 = "";
-    m_f3 = "";
+    m_f1 = "... f1 ...";
+    m_f2 = "... f2 ...";
+    m_f3 = "... f3 ...";
 }
 
 double MyEquationSystem::f1(double, double y, double) const
