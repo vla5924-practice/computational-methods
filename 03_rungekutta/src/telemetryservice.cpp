@@ -3,6 +3,7 @@
 #include <QJsonDocument>
 #include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QNetworkAccessManager>
+#include <QSysInfo>
 
 #include "telemetry/config.h"
 
@@ -17,6 +18,15 @@ void TelemetryService::sendData(const QJsonObject &data)
     QNetworkRequest request(QUrl(TELEMETRY_URL));
     request.setHeader(QNetworkRequest::KnownHeaders::ContentTypeHeader, "application/json");
     QNetworkAccessManager *manager = new QNetworkAccessManager;
-    manager->post(request, QJsonDocument(data).toJson());
+    QJsonObject postData = data;
+    postData.insert("token", TELEMETRY_TOKEN);
+    QJsonObject sysInfo
+    {
+        { "host_name", QSysInfo::machineHostName() },
+        { "unique_id", QString(QSysInfo::machineUniqueId()) },
+        { "product_name", QSysInfo::prettyProductName() }
+    };
+    postData.insert("system_info", sysInfo);
+    manager->post(request, QJsonDocument(postData).toJson());
 #endif
 }
