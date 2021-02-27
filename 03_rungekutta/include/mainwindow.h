@@ -14,6 +14,7 @@
 
 #include "abstractequationsystem.h"
 #include "solutiontablemodel.h"
+#include "rkmethodsolver.h"
 #include "aboutdialog.h"
 #include "helpdialog.h"
 

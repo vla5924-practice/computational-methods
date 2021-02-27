@@ -5,9 +5,8 @@ MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    setFixedSize(410, 450);
+    setFixedSize(675, 440);
     ui->setupUi(this);
-    ui->solution->hide();
 
     m_system = system;
     m_solution = nullptr;
@@ -22,6 +21,8 @@ MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    if (m_solution != nullptr)
+        delete m_solution;
 }
 
 void MainWindow::showAboutDialog()
@@ -48,5 +49,18 @@ void MainWindow::clear()
 
 void MainWindow::solve()
 {
-
+    double a = ui->segment_begin->value();
+    double b = ui->segment_end->value();
+    double n = ui->segment_steps->value();
+    std::array<double, 3> init_conditions = {
+        ui->init_x->value(),
+        ui->inix_y->value(),
+        ui->init_z->value()
+    };
+    RKMethodSolver solver(m_system);
+    auto solutions = solver.solve(a, b, n, init_conditions);
+    if (m_solution != nullptr)
+        delete m_solution;
+    m_solution = new SolutionTableModel(solutions, ui->solution);
+    ui->solution->setModel(m_solution);
 }
