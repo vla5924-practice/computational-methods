@@ -2,8 +2,8 @@
 
 MyEquationSystem::MyEquationSystem()
 {
-    m_f1 = "x";
-    m_f2 = "y";
+    m_f1 = "y";
+    m_f2 = "x";
     m_f3 = "x + y + z";
 }
 

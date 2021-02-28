@@ -32,13 +32,13 @@ std::vector<std::array<double, 4>> RKMethodSolver::solve(double a, double b, int
         K[1][0] = h * m_system->f2(x_prev, y_prev, z_prev);
         K[2][0] = h * m_system->f3(x_prev, y_prev, z_prev);
 
-        K[0][1] = h * m_system->f1(x_prev + K[0][0] / 2, y_prev + K[1][0], z_prev + K[2][0] / 2);
-        K[1][1] = h * m_system->f2(x_prev + K[0][0] / 2, y_prev + K[1][0], z_prev + K[2][0] / 2);
-        K[2][1] = h * m_system->f3(x_prev + K[0][0], y_prev + K[1][0], z_prev + K[2][0] / 2);
+        K[0][1] = h * m_system->f1(x_prev + K[0][0] / 2, y_prev + K[1][0] / 2, z_prev + K[2][0] / 2);
+        K[1][1] = h * m_system->f2(x_prev + K[0][0] / 2, y_prev + K[1][0] / 2, z_prev + K[2][0] / 2);
+        K[2][1] = h * m_system->f3(x_prev + K[0][0] / 2, y_prev + K[1][0] / 2, z_prev + K[2][0] / 2);
 
         K[0][2] = h * m_system->f1(x_prev + K[0][1] / 2, y_prev + K[1][1] / 2, z_prev + K[2][1] / 2);
         K[1][2] = h * m_system->f2(x_prev + K[0][1] / 2, y_prev + K[1][1] / 2, z_prev + K[2][1] / 2);
-        K[2][2] = h * m_system->f3(x_prev + K[0][1], y_prev + K[1][1] / 2, z_prev + K[2][1] / 2);
+        K[2][2] = h * m_system->f3(x_prev + K[0][1] / 2, y_prev + K[1][1] / 2, z_prev + K[2][1] / 2);
 
         K[0][3] = h * m_system->f1(x_prev + K[0][2], y_prev + K[1][2], z_prev + K[2][2]);
         K[1][3] = h * m_system->f2(x_prev + K[0][2], y_prev + K[1][2], z_prev + K[2][2]);
