@@ -1,24 +1,30 @@
-QT       += core gui widgets network
+QT     += core gui widgets network printsupport
 
 CONFIG += c++11
 
 INCLUDEPATH += \
-    include
+    include \
+    thirdparty/qcustomplot
 
 HEADERS += \
     include/abstractequationsystem.h \
+    include/abstractaccuratesolution.h \
     include/mainwindow.h \
     include/myequationsystem.h \
+    include/myaccuratesolution.h \
     include/rkmethodsolver.h \
     include/solutiontablemodel.h \
     include/aboutdialog.h \
     include/helpdialog.h \
     include/telemetry/config.h \
     include/telemetry/inc.h \
-    include/telemetry/service.h
+    include/telemetry/service.h \
+    thirdparty/qcustomplot/qcustomplot.h \
+    include/plotsdialog.h
 
 SOURCES += \
     src/abstractequationsystem.cpp \
+    src/abstractaccuratesolution.cpp \
     src/mainwindow.cpp \
     src/main.cpp \
     src/myequationsystem.cpp \
@@ -26,12 +32,16 @@ SOURCES += \
     src/solutiontablemodel.cpp \
     src/telemetryservice.cpp \
     src/aboutdialog.cpp \
-    src/helpdialog.cpp
+    src/helpdialog.cpp \
+    src/myaccuratesolution.cpp \
+    thirdparty/qcustomplot/qcustomplot.cpp \
+    src/plotsdialog.cpp
 
 FORMS += \
     ui/mainwindow.ui \
     ui/aboutdialog.ui \
-    ui/helpdialog.ui
+    ui/helpdialog.ui \
+    ui/plotsdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -1,8 +1,12 @@
 #pragma once
 
+#include <vector>
+#include <array>
+
 #include <QMainWindow>
 #include <QWidget>
 
+#include "abstractplot.h"
 #include "abstractequationsystem.h"
 #include "solutiontablemodel.h"
 
@@ -21,6 +25,7 @@ public:
 public slots:
     void showAboutDialog();
     void showHelpDialog();
+    void showPlotsDialog();
     void startOver();
     void solve();
 
@@ -28,4 +33,7 @@ private:
     Ui::MainWindow *ui;
     AbstractEquationSystem *m_system;
     SolutionTableModel *m_solution;
+
+    std::vector<std::array<double, 4>> m_approx;
+    AbstractAccurateSolution* m_accur;
 };

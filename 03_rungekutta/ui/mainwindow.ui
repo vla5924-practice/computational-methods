@@ -393,7 +393,7 @@
       <x>210</x>
       <y>10</y>
       <width>441</width>
-      <height>381</height>
+      <height>351</height>
      </rect>
     </property>
     <property name="title">
@@ -405,10 +405,23 @@
        <x>10</x>
        <y>20</y>
        <width>421</width>
-       <height>351</height>
+       <height>321</height>
       </rect>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="render">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>370</y>
+      <width>181</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Render phase portrait</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

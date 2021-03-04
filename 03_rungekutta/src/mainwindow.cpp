@@ -9,6 +9,8 @@
 #include "rkmethodsolver.h"
 #include "aboutdialog.h"
 #include "helpdialog.h"
+#include "plotsdialog.h"
+#include "myplot.h"
 #include "telemetry/inc.h"
 
 MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
@@ -24,9 +26,11 @@ MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
     ui->eq_1->setText(" = " + m_system->f1Str());
     ui->eq_2->setText(" = " + m_system->f2Str());
     ui->eq_3->setText(" = " + m_system->f3Str());
+    ui->render->setDisabled(true);
 
     connect(ui->action_start, &QAction::triggered, this, &MainWindow::startOver);
     connect(ui->solve, &QPushButton::clicked, this, &MainWindow::solve);
+    connect(ui->render, &QPushButton::clicked, this, &MainWindow::showPlotsDialog);
     connect(ui->action_help, &QAction::triggered, this, &MainWindow::showHelpDialog);
     connect(ui->action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
 
@@ -51,6 +55,13 @@ void MainWindow::showHelpDialog()
 {
     SEND_TELEMETRY_ACTION("show_help");
     HelpDialog dialog;
+    dialog.exec();
+}
+
+void MainWindow::showPlotsDialog()
+{
+    SEND_TELEMETRY_ACTION("show_plots_dialog");
+    PlotsDialog dialog(m_approx, m_accur, this);
     dialog.exec();
 }
 
@@ -84,11 +95,11 @@ void MainWindow::solve()
         data.insert("init_conditions", arr);
         SEND_TELEMETRY(data);
     }
+    m_accur = new MyAccurateSolution(init_conditions);
     RKMethodSolver solver(m_system);
-    std::vector<std::array<double, 4>> solutions;
     try
     {
-        solutions = solver.solve(a, b, n, init_conditions);
+        m_approx = solver.solve(a, b, n, init_conditions);
     }
     catch (std::exception& e)
     {
@@ -96,6 +107,7 @@ void MainWindow::solve()
     }
     if (m_solution != nullptr)
         delete m_solution;
-    m_solution = new SolutionTableModel(solutions, ui->solution);
+    m_solution = new SolutionTableModel(m_approx, ui->solution);
     ui->solution->setModel(m_solution);
+    ui->render->setDisabled(false);
 }
