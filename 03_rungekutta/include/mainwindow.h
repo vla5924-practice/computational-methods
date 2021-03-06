@@ -6,7 +6,7 @@
 #include <QMainWindow>
 #include <QWidget>
 
-#include "abstractplot.h"
+#include "abstractaccuratesolution.h"
 #include "abstractequationsystem.h"
 #include "solutiontablemodel.h"
 

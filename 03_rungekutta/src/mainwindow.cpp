@@ -10,7 +10,7 @@
 #include "aboutdialog.h"
 #include "helpdialog.h"
 #include "plotsdialog.h"
-#include "myplot.h"
+#include "myaccuratesolution.h"
 #include "telemetry/inc.h"
 
 MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :

@@ -3,7 +3,7 @@
 #include <QDialog>
 
 #include "qcustomplot.h"
-#include "abstractplot.h"
+#include "abstractaccuratesolution.h"
 
 namespace Ui {
 class PlotsDialog;
