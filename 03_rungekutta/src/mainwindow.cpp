@@ -95,7 +95,7 @@ void MainWindow::solve()
         data.insert("init_conditions", arr);
         SEND_TELEMETRY(data);
     }
-    m_accur = new MyAccurateSolution(init_conditions);
+    m_accur = new MyAccurateSolution(init_conditions, a);
     RKMethodSolver solver(m_system);
     try
     {

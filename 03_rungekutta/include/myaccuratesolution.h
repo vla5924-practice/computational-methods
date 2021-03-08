@@ -9,7 +9,7 @@ class MyAccurateSolution : public AbstractAccurateSolution
     double c3;
 
 public:
-    MyAccurateSolution(const std::array<double, 3>& init_conditions);
+    MyAccurateSolution(const std::array<double, 3>& init_conditions, double t);
     ~MyAccurateSolution() = default;
 
     double f1(double t) const;
