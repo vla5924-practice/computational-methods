@@ -15,7 +15,6 @@ HEADERS += \
     include/rkmethodsolver.h \
     include/solutiontablemodel.h \
     include/aboutdialog.h \
-    include/helpdialog.h \
     include/telemetry/config.h \
     include/telemetry/inc.h \
     include/telemetry/service.h \
@@ -32,7 +31,6 @@ SOURCES += \
     src/solutiontablemodel.cpp \
     src/telemetryservice.cpp \
     src/aboutdialog.cpp \
-    src/helpdialog.cpp \
     src/myaccuratesolution.cpp \
     thirdparty/qcustomplot/qcustomplot.cpp \
     src/plotsdialog.cpp
@@ -40,7 +38,6 @@ SOURCES += \
 FORMS += \
     ui/mainwindow.ui \
     ui/aboutdialog.ui \
-    ui/helpdialog.ui \
     ui/plotsdialog.ui
 
 # Default rules for deployment.
