@@ -24,7 +24,6 @@ public:
 
 public slots:
     void showAboutDialog();
-    void showHelpDialog();
     void showPlotsDialog();
     void startOver();
     void solve();

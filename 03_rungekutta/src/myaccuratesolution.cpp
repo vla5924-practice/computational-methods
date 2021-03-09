@@ -2,11 +2,11 @@
 
 #include <cmath>
 
-MyAccurateSolution::MyAccurateSolution(const std::array<double, 3> &init_conditions)
+MyAccurateSolution::MyAccurateSolution(double t_start, const std::array<double, 3> &init_conditions)
 {
-    c1 = (init_conditions[0] + init_conditions[1]) / 2;
-    c2 = (init_conditions[0] - init_conditions[1]) / 2;
-    c3 = init_conditions[2];
+    c1 = std::exp(-t_start) * (init_conditions[0] + init_conditions[1]) / 2;
+    c2 = std::exp(t_start) * (init_conditions[0] - init_conditions[1]) / 2;
+    c3 = std::exp(-t_start) * init_conditions[2] - 2 * c1 * t_start;
 
     m_f1 = QString::number(c1, 'g', 2) + "e<sup>t</sup> + (" + QString::number(c2, 'g', 2) + ") * e<sup>-t</sup>";
     m_f2 = QString::number(c1, 'g', 2) + "e<sup>t</sup> - (" + QString::number(c2, 'g', 2) + ") * e<sup>-t</sup>";

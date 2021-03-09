@@ -61,7 +61,7 @@
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="inix_y">
+    <widget class="QDoubleSpinBox" name="init_y">
      <property name="geometry">
       <rect>
        <x>80</x>
@@ -212,13 +212,13 @@
       </rect>
      </property>
      <property name="minimum">
-      <number>1</number>
+      <number>2</number>
      </property>
      <property name="maximum">
       <number>10000</number>
      </property>
      <property name="value">
-      <number>1</number>
+      <number>10</number>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -415,7 +415,7 @@
      <rect>
       <x>210</x>
       <y>370</y>
-      <width>181</width>
+      <width>441</width>
       <height>23</height>
      </rect>
     </property>
@@ -452,7 +452,6 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_start"/>
-   <addaction name="action_help"/>
    <addaction name="action_about"/>
   </widget>
   <action name="action_start">
@@ -466,11 +465,6 @@
   <action name="action_about">
    <property name="text">
     <string>About</string>
-   </property>
-  </action>
-  <action name="action_help">
-   <property name="text">
-    <string>Help</string>
    </property>
   </action>
  </widget>
