@@ -66,7 +66,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Red line&lt;/span&gt; meets to the plot of accurate solution.&lt;br/&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;Blue line&lt;/span&gt; meets to the plot of approximate solution.&lt;/p&gt;&lt;p&gt;Approximate solution was calculated with Runge-Kutta method.&lt;/p&gt;&lt;p&gt;Due to fairly high accuracy, the plots may match from afar.&lt;br/&gt;You can use zooming and dragging on plots.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Red line&lt;/span&gt; meets to the plot of accurate solution.&lt;br/&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;Blue line&lt;/span&gt; meets to the plot of approximate solution.&lt;/p&gt;&lt;p&gt;Approximate solution was calculated with Runge-Kutta method.&lt;/p&gt;&lt;p&gt;Due to fairly high accuracy, the plots may match from afar.&lt;br/&gt;You can use zooming and dragging on plots with mouse.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="textFormat">
     <enum>Qt::RichText</enum>

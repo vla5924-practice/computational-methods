@@ -29,9 +29,10 @@ PlotsDialog::PlotsDialog(const std::vector<std::array<double, 4>>& approx,
 
     ui->plot_x->addGraph();
     ui->plot_x->graph(0)->setData(t, x_app);
-    ui->plot_x->graph(0)->setPen(QPen(Qt::red));
+    ui->plot_x->graph(0)->setPen(QPen(Qt::blue));
     ui->plot_x->addGraph();
     ui->plot_x->graph(1)->setData(t, x_acc);
+    ui->plot_x->graph(1)->setPen(QPen(Qt::red));
     ui->plot_x->xAxis->setLabel("t");
     ui->plot_x->yAxis->setLabel("x'");
     ui->plot_x->graph(0)->rescaleAxes();
@@ -41,9 +42,10 @@ PlotsDialog::PlotsDialog(const std::vector<std::array<double, 4>>& approx,
 
     ui->plot_y->addGraph();
     ui->plot_y->graph(0)->setData(t, y_app);
-    ui->plot_y->graph(0)->setPen(QPen(Qt::red));
+    ui->plot_y->graph(0)->setPen(QPen(Qt::blue));
     ui->plot_y->addGraph();
     ui->plot_y->graph(1)->setData(t, y_acc);
+    ui->plot_y->graph(1)->setPen(QPen(Qt::red));
     ui->plot_y->xAxis->setLabel("t");
     ui->plot_y->yAxis->setLabel("y'");
     ui->plot_y->graph(0)->rescaleAxes();
@@ -53,9 +55,10 @@ PlotsDialog::PlotsDialog(const std::vector<std::array<double, 4>>& approx,
 
     ui->plot_z->addGraph();
     ui->plot_z->graph(0)->setData(t, z_app);
-    ui->plot_z->graph(0)->setPen(QPen(Qt::red));
+    ui->plot_z->graph(0)->setPen(QPen(Qt::blue));
     ui->plot_z->addGraph();
     ui->plot_z->graph(1)->setData(t, z_acc);
+    ui->plot_z->graph(1)->setPen(QPen(Qt::red));
     ui->plot_z->xAxis->setLabel("t");
     ui->plot_z->yAxis->setLabel("z'");
     ui->plot_z->graph(0)->rescaleAxes();
