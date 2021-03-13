@@ -10,7 +10,6 @@
 #include "aboutdialog.h"
 #include "plotsdialog.h"
 #include "myaccuratesolution.h"
-#include "telemetry/inc.h"
 
 MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
     QMainWindow(parent),
@@ -31,8 +30,6 @@ MainWindow::MainWindow(AbstractEquationSystem* system, QWidget *parent) :
     connect(ui->solve, &QPushButton::clicked, this, &MainWindow::solve);
     connect(ui->render, &QPushButton::clicked, this, &MainWindow::showPlotsDialog);
     connect(ui->action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
-
-    SEND_TELEMETRY_ACTION("launch");
 }
 
 MainWindow::~MainWindow()
@@ -44,21 +41,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::showAboutDialog()
 {
-    SEND_TELEMETRY_ACTION("show_about");
     AboutDialog dialog;
     dialog.exec();
 }
 
 void MainWindow::showPlotsDialog()
 {
-    SEND_TELEMETRY_ACTION("show_plots_dialog");
     PlotsDialog dialog(m_approx, m_accur, this);
     dialog.exec();
 }
 
 void MainWindow::startOver()
 {
-    SEND_TELEMETRY_ACTION("start_over");
     ui->segment_begin->setValue(0);
     ui->segment_end->setValue(0);
     ui->segment_steps->setValue(10);
@@ -90,7 +84,6 @@ void MainWindow::solve()
         arr.append(init_conditions[1]);
         arr.append(init_conditions[2]);
         data.insert("init_conditions", arr);
-        SEND_TELEMETRY(data);
     }
     m_accur = new MyAccurateSolution(a, init_conditions);
     RKMethodSolver solver(m_system);

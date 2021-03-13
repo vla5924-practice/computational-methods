@@ -1,4 +1,4 @@
-QT     += core gui widgets network printsupport
+QT     += core gui widgets printsupport
 
 CONFIG += c++11
 
@@ -15,9 +15,6 @@ HEADERS += \
     include/rkmethodsolver.h \
     include/solutiontablemodel.h \
     include/aboutdialog.h \
-    include/telemetry/config.h \
-    include/telemetry/inc.h \
-    include/telemetry/service.h \
     thirdparty/qcustomplot/qcustomplot.h \
     include/plotsdialog.h
 
@@ -29,7 +26,6 @@ SOURCES += \
     src/myequationsystem.cpp \
     src/rkmethodsolver.cpp \
     src/solutiontablemodel.cpp \
-    src/telemetryservice.cpp \
     src/aboutdialog.cpp \
     src/myaccuratesolution.cpp \
     thirdparty/qcustomplot/qcustomplot.cpp \
