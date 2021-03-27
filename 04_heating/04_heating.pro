@@ -7,10 +7,12 @@ INCLUDEPATH += \
     thirdparty/qcustomplot
 
 HEADERS += \
+    include/computation.h \
     include/mainwindow.h \
     thirdparty/qcustomplot/qcustomplot.h
 
 SOURCES += \
+    src/computation.cpp \
     src/mainwindow.cpp \
     src/main.cpp \
     thirdparty/qcustomplot/qcustomplot.cpp

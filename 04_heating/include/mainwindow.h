@@ -1,5 +1,6 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
+
+#include <chrono>
 
 #include <QMainWindow>
 
@@ -15,7 +16,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void startComputation();
+    void changeComputationProgress(int current, int total);
+    void processComputationResult();
+
 private:
     Ui::MainWindow *ui;
+
+    std::chrono::time_point<std::chrono::high_resolution_clock> m_start;
 };
-#endif // MAINWINDOW_H
