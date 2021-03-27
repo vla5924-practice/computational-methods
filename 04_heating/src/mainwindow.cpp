@@ -21,6 +21,7 @@ MainWindow::~MainWindow()
 void MainWindow::startComputation()
 {
     m_start = std::chrono::high_resolution_clock::now();
+    ui->comp_time->setText("Computing...");
     Computation* comp = new Computation(this);
     connect(comp, &Computation::progressChanged, this, &MainWindow::changeComputationProgress);
     connect(comp, &Computation::resultReady, this, &MainWindow::processComputationResult);
@@ -30,7 +31,8 @@ void MainWindow::startComputation()
 
 void MainWindow::changeComputationProgress(int current, int total)
 {
-    if (current == 0) {
+    if (current == 0)
+    {
         ui->progress->setMinimum(0);
         ui->progress->setMaximum(total);
     }

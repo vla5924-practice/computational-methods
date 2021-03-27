@@ -3,7 +3,8 @@
 #include <QThread>
 #include <thread>
 
-class Computation : public QThread {
+class Computation : public QThread
+{
     Q_OBJECT
 
     void run() override;
