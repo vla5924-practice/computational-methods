@@ -512,13 +512,81 @@
      <rect>
       <x>220</x>
       <y>470</y>
-      <width>561</width>
-      <height>61</height>
+      <width>381</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="title">
      <string>Additional information</string>
     </property>
+    <widget class="QLabel" name="label_20">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>371</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Legend: &lt;span style=&quot; color:#ff0000;&quot;&gt;red line&lt;/span&gt; is φ(x) plot · &lt;span style=&quot; color:#0000ff;&quot;&gt;blue line&lt;/span&gt; is y(x, T) plot · &lt;span style=&quot; color:#008000;&quot;&gt;green line&lt;/span&gt; is ??? plot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_21">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>361</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Total computation time: ??? s.</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_7">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>470</y>
+      <width>171</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Plot settings</string>
+    </property>
+    <widget class="QCheckBox" name="check_show">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>151</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Show ??? plot</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>151</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>We need more settings!!!</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
