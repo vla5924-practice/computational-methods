@@ -4,24 +4,21 @@
 
 constexpr double PI = 3.14;
 
-// Функция phi(x) - начальное распределение температуры
-double Computation::function_phi(double x) const
+double Computation::phiFunction(double x) const
 {
-    return 1.0 / L + phi1 * std::cos(PI * x / L) + phi2 * std::cos(2.0 * PI * x / L);
+    return 1.0 / m_l + m_phi1 * std::cos(PI * x / m_l) + m_phi2 * std::cos(2.0 * PI * x / m_l);
 }
 
-// Функция b(x) - управляющая функция
-double Computation::function_b(double x) const
+double Computation::bFunction(double x) const
 {
-    return b0 + b1 * std::cos(PI * x / L) + b2 * std::cos(2.0 * PI * x / L);
+    return m_b0 + m_b1 * std::cos(PI * x / m_l) + m_b2 * std::cos(2.0 * PI * x / m_l);
 }
 
-// Метод Симпсона для вычисления интеграла в части Б
-double Computation::SimpsonMethod(int j) const
+double Computation::simpsonMethod(const std::vector<std::vector<double>>& grid, const std::vector<double>& b, int j) const
 {
     double value = b[0] * grid[0][j];
 
-    for (int i = 1; i < LCount - 1; i++)
+    for (int i = 1; i < m_count_l - 1; i++)
     {
         if (i % 2 == 0)
             value += 2.0 * b[i + 1] * grid[i + 1][j];
@@ -29,17 +26,17 @@ double Computation::SimpsonMethod(int j) const
             value += 4.0 * b[i] * grid[i][j];
     }
 
-    value += b[LCount - 1] * grid[LCount - 1][j];
-    value = value * h / 3.0;
+    value += b[m_count_l - 1] * grid[m_count_l - 1][j];
+    value = value * m_step_l / 3.0;
 
     return value;
 }
 
-double Computation::SimpsonMethod_W(const std::vector<std::vector<double>>& w, int j) const
+double Computation::simpsonMethodW(const std::vector<std::vector<double>>& w, int j) const
 {
     double value = w[0][j];
 
-    for (int i = 1; i < LCount - 1; i++)
+    for (int i = 1; i < m_count_l - 1; i++)
     {
         if (i % 2 == 0)
             value += 2.0 * w[i + 1][j];
@@ -47,38 +44,39 @@ double Computation::SimpsonMethod_W(const std::vector<std::vector<double>>& w, i
             value += 4.0 * w[i][j];
     }
 
-    value += w[LCount - 1][j];
-    value = value * h / 3.0;
+    value += w[m_count_l - 1][j];
+    value = value * m_step_l / 3.0;
 
     return value;
 }
 
-Computation::Computation(double b0, double b1, double b2, double phi1, double phi2, double T, double L, double tau,
-                         double h, QObject *parent) : QThread(parent), b0(b0), b1(b1), b2(b2), phi1(phi1), phi2(phi2),
-                         T(T), L(L), tau(tau), h(h), TCount(0), LCount(0)
+Computation::Computation(double b0, double b1, double b2, double phi1, double phi2, double t, double l, double step_t,
+                         double step_l, QObject *parent) : QThread(parent), m_phi1(phi1), m_phi2(phi2), m_b0(b0),
+                         m_b1(b1), m_b2(b2), m_t(t), m_l(l), m_step_t(step_t), m_step_l(step_l), m_count_t(0),
+                         m_count_l(0)
 {
-
+    m_count_t = static_cast<int>(m_t / m_step_t) + 1;
+    m_count_l = static_cast<int>(m_l / m_step_l) + 1;
 }
 
-// Метод прогонки для 3-х диагональной матрицы
-std::vector<double> Computation::TridiagonalMatrixAlgorithm(double A, double B, double C, double AL, double C0, const std::vector<double>& F) const
+std::vector<double> Computation::tridiagonalMatrixAlgorithm(double A, double B, double C, double AL, double C0, const std::vector<double>& F) const
 {
-    std::vector<double> y(LCount);
-    std::vector<double> alpha(LCount);
-    std::vector<double> beta(LCount);
+    std::vector<double> y(m_count_l);
+    std::vector<double> alpha(m_count_l);
+    std::vector<double> beta(m_count_l);
 
     alpha[0] = -1.0 * C0 / B;
     beta[0] = F[0] / B;
 
-    for (int i = 1; i < LCount - 1; i++)
+    for (int i = 1; i < m_count_l - 1; i++)
     {
         alpha[i] = -1.0 * C / (A * alpha[i - 1] + B);
         beta[i] = (F[i] - A * beta[i - 1]) / (A * alpha[i - 1] + B);
     }
 
-    y[LCount - 1] = (F[LCount - 1] - AL * beta[LCount - 2]) / (AL * alpha[LCount - 2] + B);
+    y[m_count_l - 1] = (F[m_count_l - 1] - AL * beta[m_count_l - 2]) / (AL * alpha[m_count_l - 2] + B);
 
-    for (int i = LCount - 2; i >= 0; i--)
+    for (int i = m_count_l - 2; i >= 0; i--)
         y[i] = alpha[i] * y[i + 1] + beta[i];
 
     return y;
@@ -86,59 +84,57 @@ std::vector<double> Computation::TridiagonalMatrixAlgorithm(double A, double B, 
 
 void Computation::run()
 {
-    TCount = static_cast<int>(T / tau) + 1;
-    LCount = static_cast<int>(L / h) + 1;
-
-    int maximum = 2 * LCount + TCount * (2 * LCount);
+    int maximum = 2 * m_count_l + m_count_t * (2 * m_count_l);
     emit progressChanged(0, maximum);
     int current_progress = 0;
 
-    grid.resize(LCount);
-    for (auto& row : grid)
-        row.resize(TCount, 0.0);
-    grid_part_a.resize(LCount);
-    for (auto& row : grid_part_a)
-        row.resize(TCount, 0.0);
-    b.resize(LCount);
-    phi.resize(LCount);
+    std::vector<std::vector<double>> grid;
+    std::vector<std::vector<double>> grid_part_a;
+    std::vector<double> b;
+    std::vector<double> phi;
 
-    // Инициализация необходимых переменных
+    grid.resize(m_count_l);
+    for (auto& row : grid)
+        row.resize(m_count_t, 0.0);
+    grid_part_a.resize(m_count_l);
+    for (auto& row : grid_part_a)
+        row.resize(m_count_t, 0.0);
+    b.resize(m_count_l);
+    phi.resize(m_count_l);
+
     std::vector<double> y;
     std::vector<double> y_part_a;
-    std::vector<double> F(LCount);
-    std::vector<double> F_part_a(LCount);
+    std::vector<double> F(m_count_l);
+    std::vector<double> F_part_a(m_count_l);
 
-    // Первоначальная инициализация функций по интервалам сетки
-    for (int i = 0; i < LCount; i++)
+    for (int i = 0; i < m_count_l; i++)
     {
-        phi[i] = function_phi(i * h);
-        b[i] = function_b(i * h);
+        phi[i] = phiFunction(i * m_step_l);
+        b[i] = bFunction(i * m_step_l);
         grid[i][0] = phi[i];
         grid_part_a[i][0] = phi[i];
         emit progressChanged(++current_progress, maximum);
     }
 
-    // Инициализация коэффициентов для метода прогонки
-    double r = coeff * coeff * tau / (h * h);  // Выполняем замену для удобства
+    double r = m_coeff * m_coeff * m_step_t / (m_step_l * m_step_l);
     double A = r;
     double B = -1.0 - 2.0 * r;
     double C = r;
     double AL = 2.0 * r;
     double C0 = 2.0 * r;
 
-    // Решение задачи
-    for (int j = 0; j < TCount - 1; j++)
+    for (int j = 0; j < m_count_t - 1; j++)
     {
-        double integral = SimpsonMethod(j);
-        for (int i = 0; i < LCount; i++)
+        double integral = simpsonMethod(grid, b, j);
+        for (int i = 0; i < m_count_l; i++)
         {
-            F[i] = -1.0 * grid[i][j] * (1.0 + tau * b[i] - tau * integral);
-            F_part_a[i] = -1.0 * grid_part_a[i][j] * (1.0 + tau * b[i]);
+            F[i] = -1.0 * grid[i][j] * (1.0 + m_step_t * b[i] - m_step_t * integral);
+            F_part_a[i] = -1.0 * grid_part_a[i][j] * (1.0 + m_step_t * b[i]);
             emit progressChanged(++current_progress, maximum);
         }
-        y = TridiagonalMatrixAlgorithm(A, B, C, AL, C0, F);
-        y_part_a = TridiagonalMatrixAlgorithm(A, B, C, AL, C0, F_part_a);
-        for (int i = 0; i < LCount; i++)
+        y = tridiagonalMatrixAlgorithm(A, B, C, AL, C0, F);
+        y_part_a = tridiagonalMatrixAlgorithm(A, B, C, AL, C0, F_part_a);
+        for (int i = 0; i < m_count_l; i++)
         {
             grid[i][j + 1] = y[i];
             grid_part_a[i][j + 1] = y_part_a[i];
@@ -146,21 +142,20 @@ void Computation::run()
         }
     }
 
-    // Нахождения решения при помощи части А
-    double square = SimpsonMethod_W(grid_part_a, TCount - 1);
-    for (int i = 0; i < LCount; i++)
+    double square = simpsonMethodW(grid_part_a, m_count_t - 1);
+    for (int i = 0; i < m_count_l; i++)
     {
-        grid_part_a[i][TCount - 1] = grid_part_a[i][TCount - 1] / square;
+        grid_part_a[i][m_count_t - 1] = grid_part_a[i][m_count_t - 1] / square;
         emit progressChanged(++current_progress, maximum);
     }
 
-    ComputationResult result(LCount);
-    for (int i = 0; i < LCount; i++)
+    ComputationResult result(m_count_l);
+    for (int i = 0; i < m_count_l; i++)
     {
-        result.x[i] = i * h;
+        result.x[i] = i * m_step_l;
         result.phi[i] = phi[i];
-        result.grid[i] = grid[i][TCount - 1];
-        result.grid_part_a[i] = grid_part_a[i][TCount - 1];
+        result.grid[i] = grid[i][m_count_t - 1];
+        result.grid_part_a[i] = grid_part_a[i][m_count_t - 1];
     }
 
     emit progressChanged(maximum, maximum);
