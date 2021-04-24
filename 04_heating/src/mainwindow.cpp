@@ -28,12 +28,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::startComputation()
 {
-    double T = ui->param_t->value();
-    double L = ui->param_l->value();
-    double tau = ui->step_t->value();
-    double h = ui->step_x->value();
+    double t = ui->param_t->value();
+    double l = ui->param_l->value();
+    double step_t = ui->step_t->value();
+    double step_l = ui->step_x->value();
 
-    if (T < std::numeric_limits<double>::epsilon() || L < std::numeric_limits<double>::epsilon() || tau < std::numeric_limits<double>::epsilon() || h < std::numeric_limits<double>::epsilon())
+    if (t < std::numeric_limits<double>::epsilon() || l < std::numeric_limits<double>::epsilon() || step_t < std::numeric_limits<double>::epsilon() || step_l < std::numeric_limits<double>::epsilon())
     {
         QMessageBox::warning(this, "Invalid parameters", "All these values must be greater than zero: rod length (L), heating time (T), x step size, t step size.");
         return;
@@ -50,7 +50,7 @@ void MainWindow::startComputation()
     double phi1 = ui->param_phi1->value();
     double phi2 = ui->param_phi2->value();
 
-    Computation* comp = new Computation(b0, b1, b2, phi1, phi2, T, L, tau, h, this);
+    Computation* comp = new Computation(b0, b1, b2, phi1, phi2, t, l, step_t, step_l, this);
     connect(comp, &Computation::progressChanged, this, &MainWindow::changeComputationProgress);
     connect(comp, &Computation::resultReady, this, &MainWindow::processComputationResult);
     connect(comp, &Computation::finished, comp, &QObject::deleteLater);
@@ -76,7 +76,7 @@ void MainWindow::processComputationResult(ComputationResult result)
     ui->plot->graph(1)->setData(result.x, result.grid);
     ui->plot->graph(1)->setPen(QPen(Qt::red));
     ui->plot->addGraph();
-    ui->plot->graph(2)->setData(result.x, result.grid_part_a);
+    ui->plot->graph(2)->setData(result.x, result.grid_a);
     ui->plot->graph(2)->setPen(QPen(Qt::green));
     ui->plot->graph(2)->setVisible(false);
     ui->plot->xAxis->setLabel("t");

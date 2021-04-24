@@ -88,31 +88,28 @@ void Computation::run()
     emit progressChanged(0, maximum);
     int current_progress = 0;
 
-    std::vector<std::vector<double>> grid;
-    std::vector<std::vector<double>> grid_part_a;
-    std::vector<double> b;
-    std::vector<double> phi;
+    std::vector<double> b(m_count_l);
+    std::vector<double> phi(m_count_l);
 
-    grid.resize(m_count_l);
+    std::vector<std::vector<double>> grid(m_count_l);
     for (auto& row : grid)
         row.resize(m_count_t, 0.0);
-    grid_part_a.resize(m_count_l);
-    for (auto& row : grid_part_a)
+
+    std::vector<std::vector<double>> grid_a(m_count_l);
+    for (auto& row : grid_a)
         row.resize(m_count_t, 0.0);
-    b.resize(m_count_l);
-    phi.resize(m_count_l);
 
     std::vector<double> y;
-    std::vector<double> y_part_a;
+    std::vector<double> y_a;
     std::vector<double> F(m_count_l);
-    std::vector<double> F_part_a(m_count_l);
+    std::vector<double> F_a(m_count_l);
 
     for (int i = 0; i < m_count_l; i++)
     {
         phi[i] = phiFunction(i * m_step_l);
         b[i] = bFunction(i * m_step_l);
         grid[i][0] = phi[i];
-        grid_part_a[i][0] = phi[i];
+        grid_a[i][0] = phi[i];
         emit progressChanged(++current_progress, maximum);
     }
 
@@ -129,23 +126,23 @@ void Computation::run()
         for (int i = 0; i < m_count_l; i++)
         {
             F[i] = -1.0 * grid[i][j] * (1.0 + m_step_t * b[i] - m_step_t * integral);
-            F_part_a[i] = -1.0 * grid_part_a[i][j] * (1.0 + m_step_t * b[i]);
+            F_a[i] = -1.0 * grid_a[i][j] * (1.0 + m_step_t * b[i]);
             emit progressChanged(++current_progress, maximum);
         }
         y = tridiagonalMatrixAlgorithm(A, B, C, AL, C0, F);
-        y_part_a = tridiagonalMatrixAlgorithm(A, B, C, AL, C0, F_part_a);
+        y_a = tridiagonalMatrixAlgorithm(A, B, C, AL, C0, F_a);
         for (int i = 0; i < m_count_l; i++)
         {
             grid[i][j + 1] = y[i];
-            grid_part_a[i][j + 1] = y_part_a[i];
+            grid_a[i][j + 1] = y_a[i];
             emit progressChanged(++current_progress, maximum);
         }
     }
 
-    double square = simpsonMethodW(grid_part_a, m_count_t - 1);
+    double square = simpsonMethodW(grid_a, m_count_t - 1);
     for (int i = 0; i < m_count_l; i++)
     {
-        grid_part_a[i][m_count_t - 1] = grid_part_a[i][m_count_t - 1] / square;
+        grid_a[i][m_count_t - 1] = grid_a[i][m_count_t - 1] / square;
         emit progressChanged(++current_progress, maximum);
     }
 
@@ -155,7 +152,7 @@ void Computation::run()
         result.x[i] = i * m_step_l;
         result.phi[i] = phi[i];
         result.grid[i] = grid[i][m_count_t - 1];
-        result.grid_part_a[i] = grid_part_a[i][m_count_t - 1];
+        result.grid_a[i] = grid_a[i][m_count_t - 1];
     }
 
     emit progressChanged(maximum, maximum);

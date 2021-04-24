@@ -7,9 +7,9 @@ struct ComputationResult
     QVector<double> x;
     QVector<double> phi;
     QVector<double> grid;
-    QVector<double> grid_part_a;
+    QVector<double> grid_a;
 
-    ComputationResult(int size) : x(size), phi(size), grid(size), grid_part_a(size){}
+    ComputationResult(int size) : x(size), phi(size), grid(size), grid_a(size){}
 
     ComputationResult() = default;
     ComputationResult(const ComputationResult&) = default;
