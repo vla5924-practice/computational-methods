@@ -23,6 +23,7 @@ public slots:
     void changeComputationProgress(int current, int total);
     void processComputationResult(ComputationResult result);
     void toggleGreenPlot();
+    void showAboutDialog();
 
 private:
     Ui::MainWindow *ui;

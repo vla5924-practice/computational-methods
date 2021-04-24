@@ -3,9 +3,12 @@
 
 #include <limits>
 
+#include <QAction>
+#include <QCheckBox>
 #include <QMessageBox>
 #include <QPushButton>
 
+#include "aboutdialog.h"
 #include "computation.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -15,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     connect(ui->button_start, &QPushButton::clicked, this, &MainWindow::startComputation);
     connect(ui->check_show, &QCheckBox::toggled, this, &MainWindow::toggleGreenPlot);
+    connect(ui->action_about, &QAction::triggered, this, &MainWindow::showAboutDialog);
 }
 
 MainWindow::~MainWindow()
@@ -98,4 +102,10 @@ void MainWindow::toggleGreenPlot()
         ui->plot->graph(2)->setVisible(!ui->plot->graph(2)->visible());
         ui->plot->replot();
     }
+}
+
+void MainWindow::showAboutDialog()
+{
+    AboutDialog dialog;
+    dialog.exec();
 }

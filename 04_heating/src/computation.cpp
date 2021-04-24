@@ -2,18 +2,18 @@
 
 #include <cmath>
 
-constexpr double M_PI = 3.14;
+constexpr double PI = 3.14;
 
 // Функция phi(x) - начальное распределение температуры
 double Computation::function_phi(double x) const
 {
-    return 1.0 / L + phi1 * std::cos(M_PI * x / L) + phi2 * std::cos(2.0 * M_PI * x / L);
+    return 1.0 / L + phi1 * std::cos(PI * x / L) + phi2 * std::cos(2.0 * PI * x / L);
 }
 
 // Функция b(x) - управляющая функция
 double Computation::function_b(double x) const
 {
-    return b0 + b1 * std::cos(M_PI * x / L) + b2 * std::cos(2.0 * M_PI * x / L);
+    return b0 + b1 * std::cos(PI * x / L) + b2 * std::cos(2.0 * PI * x / L);
 }
 
 // Метод Симпсона для вычисления интеграла в части Б
