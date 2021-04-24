@@ -8,6 +8,7 @@ INCLUDEPATH += \
 
 HEADERS += \
     include/computation.h \
+    include/computationresult.h \
     include/mainwindow.h \
     thirdparty/qcustomplot/qcustomplot.h
 

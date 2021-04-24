@@ -41,9 +41,6 @@
      <property name="textFormat">
       <enum>Qt::RichText</enum>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
     </widget>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
@@ -56,9 +53,6 @@
      </property>
      <property name="text">
       <string>&lt;u&gt;1&lt;/u&gt;&lt;br&gt;L</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -76,9 +70,6 @@
      <property name="textFormat">
       <enum>Qt::RichText</enum>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
     </widget>
     <widget class="QLabel" name="label_4">
      <property name="geometry">
@@ -91,9 +82,6 @@
      </property>
      <property name="text">
       <string>&lt;u&gt;&lt;span style=&quot;font-family:'Times';font-size:12px&quot;&gt;π&lt;/span&gt;x&lt;/u&gt;&lt;br&gt;L</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="label_5">
@@ -111,9 +99,6 @@
      <property name="textFormat">
       <enum>Qt::RichText</enum>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
     </widget>
     <widget class="QLabel" name="label_6">
      <property name="geometry">
@@ -126,9 +111,6 @@
      </property>
      <property name="text">
       <string>&lt;u&gt;2&lt;span style=&quot;font-family:'Times';font-size:12px&quot;&gt;π&lt;/span&gt;x&lt;/u&gt;&lt;br&gt;L</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="label_9">
@@ -146,9 +128,6 @@
      <property name="textFormat">
       <enum>Qt::RichText</enum>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
     </widget>
     <widget class="QLabel" name="label_10">
      <property name="geometry">
@@ -165,9 +144,6 @@
      <property name="textFormat">
       <enum>Qt::RichText</enum>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
     </widget>
     <widget class="QLabel" name="label_11">
      <property name="geometry">
@@ -181,9 +157,6 @@
      <property name="text">
       <string>&lt;u&gt;2&lt;span style=&quot;font-family:'Times';font-size:12px&quot;&gt;π&lt;/span&gt;x&lt;/u&gt;&lt;br&gt;L</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
     </widget>
     <widget class="QLabel" name="label_12">
      <property name="geometry">
@@ -196,9 +169,6 @@
      </property>
      <property name="text">
       <string>&lt;u&gt;&lt;span style=&quot;font-family:'Times';font-size:12px&quot;&gt;π&lt;/span&gt;x&lt;/u&gt;&lt;br&gt;L</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </widget>
@@ -223,6 +193,12 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="minimum">
+      <double>-1000000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
+     </property>
     </widget>
     <widget class="QLabel" name="label_7">
      <property name="geometry">
@@ -245,6 +221,12 @@
        <width>91</width>
        <height>22</height>
       </rect>
+     </property>
+     <property name="minimum">
+      <double>-1000000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
      </property>
     </widget>
     <widget class="QLabel" name="label_8">
@@ -282,6 +264,12 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="minimum">
+      <double>-1000000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
+     </property>
     </widget>
     <widget class="QDoubleSpinBox" name="param_phi1">
      <property name="geometry">
@@ -291,6 +279,12 @@
        <width>91</width>
        <height>22</height>
       </rect>
+     </property>
+     <property name="minimum">
+      <double>-1000000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
      </property>
     </widget>
     <widget class="QLabel" name="label_14">
@@ -314,6 +308,15 @@
        <width>91</width>
        <height>22</height>
       </rect>
+     </property>
+     <property name="minimum">
+      <double>-1000000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>0.000000000000000</double>
      </property>
     </widget>
     <widget class="QLabel" name="label_15">
@@ -351,6 +354,9 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
+     </property>
     </widget>
     <widget class="QLabel" name="label_16">
      <property name="geometry">
@@ -387,6 +393,9 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
+     </property>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_4">
@@ -409,6 +418,9 @@
        <width>91</width>
        <height>22</height>
       </rect>
+     </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
      </property>
     </widget>
     <widget class="QLabel" name="label_18">
@@ -446,6 +458,9 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
+     </property>
     </widget>
    </widget>
    <widget class="QPushButton" name="button_start">
@@ -474,23 +489,13 @@
      <number>0</number>
     </property>
    </widget>
-   <widget class="QTableView" name="solution">
+   <widget class="QGroupBox" name="groupBox_5">
     <property name="geometry">
      <rect>
       <x>240</x>
       <y>10</y>
       <width>661</width>
-      <height>91</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_5">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>110</y>
-      <width>661</width>
-      <height>351</height>
+      <height>451</height>
      </rect>
     </property>
     <property name="title">
@@ -501,8 +506,8 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>541</width>
-       <height>321</height>
+       <width>641</width>
+       <height>421</height>
       </rect>
      </property>
     </widget>
@@ -529,7 +534,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Legend: &lt;span style=&quot; color:#ff0000;&quot;&gt;red line&lt;/span&gt; is φ(x) plot · &lt;span style=&quot; color:#0000ff;&quot;&gt;blue line&lt;/span&gt; is y(x, T) plot · &lt;span style=&quot; color:#008000;&quot;&gt;green line&lt;/span&gt; is ??? plot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Legend: &lt;span style=&quot; color:#0000ff;&quot;&gt;blue line&lt;/span&gt; is φ(x) plot · &lt;span style=&quot; color:#ff0000;&quot;&gt;red line&lt;/span&gt; is y(x, T) plot · &lt;span style=&quot; color:#008000;&quot;&gt;green line&lt;/span&gt; is y&lt;span style=&quot; vertical-align:sub;&quot;&gt;A&lt;/span&gt;(x, T) plot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="textFormat">
       <enum>Qt::RichText</enum>
@@ -575,6 +580,9 @@
      <string>Plot settings</string>
     </property>
     <widget class="QCheckBox" name="check_show">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -584,10 +592,13 @@
       </rect>
      </property>
      <property name="text">
-      <string>Show ??? plot</string>
+      <string>Show green plot</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>10</x>
